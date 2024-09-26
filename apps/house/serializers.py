@@ -71,7 +71,7 @@ class PicturesSerializer(serializers.ModelSerializer):
 class AddPropertySerializer(serializers.ModelSerializer):
     security = SecuritySerializer(required=False)
     miscellaneous = MiscellaneousSerializer(required=False)
-    documents = DocumentsSerializer()
+    documents = DocumentsSerializer(required=False)
     contact_info = ContactInfoSerializer(required=False)
     properties_pictures = PicturesSerializer(many=True, read_only=True)
     uploaded_images = serializers.ListField(
@@ -91,7 +91,7 @@ class AddPropertySerializer(serializers.ModelSerializer):
             'lon', 'youtube_url', 'location', 'price', 'currency', 'price_for', 'installment_type',
             'mortage_type', 'exchange_type', 
             'complex_name',
-            'security',
+            'security',                                                                                                                                                                                                                                                           
             "miscellaneous",
             'documents',
             'properties_pictures',
@@ -101,23 +101,21 @@ class AddPropertySerializer(serializers.ModelSerializer):
 
     def create(self, validated_data):
         request_user = self.context['request'].user
-        phone_number = getattr(request_user, 'name', 'not found phone')
+        phone_number = getattr(request_user, 'username', 'not found phone')
         
         contact_info_data = validated_data.pop('contact_info', {})
-        contact_info_data['phone_number'] = phone_number  #
+        contact_info_data['phone_number'] = phone_number  
         
         documents_data = validated_data.pop('documents', None)
         security_data = validated_data.pop('security', None)
         miscellaneous_data = validated_data.pop('miscellaneous', None)  
         uploaded_images = validated_data.pop('uploaded_images', [])
 
-        # Инициализация переменных как None
         document_instance = None
         security_instance = None
         miscellaneous_instance = None
         contact_instance = None
 
-        # Создание объектов, если данные предоставлены
         if documents_data:
             document_instance = models.Documents.objects.create(**documents_data)
             
@@ -129,24 +127,28 @@ class AddPropertySerializer(serializers.ModelSerializer):
             
         if contact_info_data: 
             contact_instance = models.ContactInfo.objects.create(**contact_info_data)
-
-        # Создание объекта Property
         property_instance = models.Property.objects.create(
             user=request_user,
-            contact_info=contact_instance,  # может быть None, если contact_info отсутствует
-            documents=document_instance,  # может быть None, если documents отсутствует
-            security=security_instance,  # может быть None, если security отсутствует
-            miscellaneous=miscellaneous_instance,  # может быть None, если miscellaneous отсутствует
+            contact_info=contact_instance,  
+            documents=document_instance,
+            security=security_instance, 
+            miscellaneous=miscellaneous_instance,
             **validated_data
         )
 
-        # Создание изображений
         for image in uploaded_images:
             models.Pictures.objects.create(property=property_instance, pictures=image)
             
         return property_instance
     
 class PropertySerializer(serializers.ModelSerializer):
+    location = RegionsSerializer()
+    complex_name = ResidentialCategorySerializer()
+    security = SecuritySerializer(read_only=True)
+    miscellaneous = MiscellaneousSerializer(read_only=True)
+    documents = DocumentsSerializer(read_only=True)
+    contact_info = ContactInfoSerializer(read_only=True)
+    
     class Meta:
         model = models.Property
         fields = "__all__"

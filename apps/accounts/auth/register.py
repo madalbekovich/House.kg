@@ -93,11 +93,11 @@ class RegisterView(CreateAPIView):
             else:
                 return Response({"response": False, "message": "Not valid username"})
 
-            return Response(
-                {
-                    "response": True,
-                    "message": "The code was successfully sent"
-                }
-            )
+        return Response(
+            {
+                "response": True,
+                "message": "The code was successfully sent"
+            }
+        )
 
         return Response(serializer.errors)

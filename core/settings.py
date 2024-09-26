@@ -148,7 +148,30 @@ AUTH_USER_MODEL = "accounts.User"
 EMAIL_USE_TLS = True
 EMAIL_HOST = "smtp.gmail.com"
 EMAIL_PORT = 587
-EMAIL_HOST_USER = "EMAIL_HOST_USER"
-EMAIL_HOST_PASSWORD = "EMAIL_HOST_PASSWORD"
+EMAIL_HOST_USER = "dn.hotelkg@gmail.com"
+EMAIL_HOST_PASSWORD = "lcwv hfnd wdfm lrho"
 
 CELERY_BROKER_URL = "redis://localhost:6380/0"
+
+
+                    ### LOGGER REQUEST ###
+                    
+
+LOGGING = {
+    'version': 1,
+    'handlers': {
+        'console': {"class": 'logging.StreamHandler'}
+    },
+    'loggers': {
+        'django.db.backends': {
+            'handlers': ['console'],
+            'level': 'DEBUG',
+        }
+    }
+}
+
+                    ### WATERMARK CONFIG###
+                    
+WATERMARK_PATH = 'media/watermark_logo/logo-1.png'
+
+GMAIL_TEMPLATE_ADD = '/home/madalbekovich/MProjects/House.kg/core/apps/helpers/send_mail_house.html'

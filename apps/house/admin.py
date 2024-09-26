@@ -6,12 +6,15 @@ from django.contrib import admin
 from mptt.admin import MPTTModelAdmin
 from .models import Location
 
-admin.site.register(Location, MPTTModelAdmin)
+@admin.register(models.Location)
+class LocationAdmin(MPTTModelAdmin):
+    list_display = ('id', 'city', 'parent')
+    search_fields = ('city', 'id')
 
 @admin.register(models.ResidentialCategory)
 class CategoryAdmin(MPTTModelAdmin):
-    list_display = ('complex_name', 'parent')
-    search_fields = ('complex_name',)
+    list_display = ('id', 'complex_name', 'parent')
+    search_fields = ('complex_name', 'id')
 
 class PicteresInline(admin.TabularInline):
     '''Tabular Inline View for Property '''

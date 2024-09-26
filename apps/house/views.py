@@ -1,4 +1,5 @@
 # framework packages
+from django.shortcuts import get_object_or_404
 from rest_framework import viewsets
 from rest_framework.decorators import action
 from rest_framework.response import Response
@@ -26,24 +27,20 @@ class CitiesView(viewsets.GenericViewSet):
     queryset = models.Location.objects.all()
     serializer_class = serializers.RegionsSerializer
     
-    @action(detail=True, methods=['get'], url_path=None)
-    def cities(self, request, *args, **kwargs):
-        instance = self.get_object()  
-        cities = models.Location.objects.filter(parent=instance) 
-        serializer = serializers.CitiesSerializer(cities, many=True)  
-        return Response(serializer.data, status=status.HTTP_200_OK)
-        
-    @action(detail=False, methods=['get'])
+    @action(detail=False, methods=['get'], url_path='regions')
     def regions(self, request, *args, **kwargs):
-        instance = models.Location.objects.filter(parent=None)
-        serializer = self.get_serializer(instance, many=True)
+        city = request.query_params.get('city')
+        region = models.Location.objects.filter(parent=None) if not city else \
+            get_object_or_404(models.Location, id=city).get_children()
+        serializer = serializers.CitiesSerializer(region, many=True, context={"empty_㋡": True})  
         return Response(serializer.data, status=status.HTTP_200_OK)
     
 class PropertyView(viewsets.GenericViewSet):
-    queryset = models.Property.objects.all()
+    queryset = models.Property.objects.select_related(
+        'location' ,'documents', 'miscellaneous', 'contact_info', 'complex_name').all().order_by('-id')
     serializer_class = serializers.AddPropertySerializer
     filter_backends = [DjangoFilterBackend, ]
-    permission_classes = [IsAuthenticated, ]
+    # permission_classes = [IsAuthenticated, ]
     filterset_class = filters.PropertyFilter
     
      
@@ -59,7 +56,7 @@ class PropertyView(viewsets.GenericViewSet):
     def property(self, request, *args, **kwagrs):
         print({"GETting data query": request.query_params})
         instance = self.filter_queryset(self.get_queryset())
-        serializer = self.get_serializer(instance, many=True)
+        serializer = serializers.PropertySerializer(instance, many=True)
         return Response(serializer.data, status=status.HTTP_200_OK)
     
     @action(detail=True, methods=['delete'], url_path=None)
