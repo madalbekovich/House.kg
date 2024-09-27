@@ -21,23 +21,17 @@ def add_watermark(sender, instance, created, **kwargs):
             y = pictures_height - watermark_height - 10
             pictures.paste(watermark, (x, y), watermark)
             pictures.save(instance.pictures.path)
-            print("Start PROCCES WATERMARK:", instance.pictures.path)
             users = models.User.objects.all()
 
             for user in users:
-                if "gmail" or '@' in user.username: 
+                if "gmail" in user.username: 
                     with open(settings.GMAIL_TEMPLATE_ADD, 'r') as html:
                         html_message = html.read()
                         send_mail(
                             subject='House.kg',
                             from_email=settings.EMAIL_HOST_USER,
-                            message='Ваше объявление успешно добавлено.', 
+                            message='Ваше объявление успешно размещено.', 
                             html_message=html_message,
                             recipient_list=[user.username], 
                         )
                         return user
-                    # TODO:  write the logic img => webp
-                    
-                    
-                    
-                    # print(f"Cообщения отправлено по почте: {user.username}")

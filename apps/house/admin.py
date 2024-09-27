@@ -20,6 +20,11 @@ class PicteresInline(admin.TabularInline):
     '''Tabular Inline View for Property '''
     model = models.Pictures
     extra = 1
+class SecurityInline(admin.TabularInline):
+    '''Tabular Inline View for Security'''
+
+    model = models.Security
+    extra = 1
     
 @admin.register(models.Property)
 class Property(admin.ModelAdmin):

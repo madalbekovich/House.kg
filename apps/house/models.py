@@ -4,6 +4,7 @@ from mptt.models import MPTTModel, TreeForeignKey
 from apps.accounts.models import User
 from apps.house import choices
 from apps.house.validators import ENIValidator, validate_youtube_url
+from django_resized import ResizedImageField
 
 class ResidentialCategory(MPTTModel):
     # Основные характеристики
@@ -255,31 +256,9 @@ class Documents(models.Model):
     class Meta:
         verbose_name = _("Правоустанавливающие документы")
         verbose_name_plural = _("Правоустанавливающие документы")
-        
-
-class ContactInfo(models.Model):
-    # Контактная информация
-    advertiser_type = models.CharField(
-        _("От чьего имени подается объявление"), 
-        max_length=50, 
-        choices=choices.ADVERTISER_OPTIONS
-    )
-    #comment_to_property = 
-    phone_number = models.CharField(
-        max_length=16,
-        verbose_name=_("Номер телефона пользователя"),
-    )
-
-    class Meta:
-        verbose_name = _("Контактная информация")
-        verbose_name_plural = _("Контактные информации")
-
-    def __str__(self):
-        return self.advertiser_type
+    
 
 class Property(models.Model):
-    
-    # slug = models.SlugField(blank=True, null=True)
     
     # Основные характеристик
     user = models.ForeignKey(
@@ -409,6 +388,9 @@ class Property(models.Model):
         null=True,
         blank=True,
     )
+    description = models.TextField(
+        _("Описание")
+    )
     price = models.DecimalField(
         _("Цена"), 
         max_digits=5, 
@@ -445,7 +427,19 @@ class Property(models.Model):
         null=True,
         blank=True,
     )
-    security = models.ForeignKey(
+    advertiser_type = models.CharField(
+        _("От чьего имени подается объявление"), 
+        max_length=50, 
+        choices=choices.ADVERTISER_OPTIONS
+    )
+    # TODO: comment_to_property = 
+    phone_number = models.CharField(
+        max_length=16,
+        verbose_name=_("Второй Номер телефона пользователя"),
+        null=True,
+        blank=True,
+    )
+    security = models.OneToOneField(
         Security, 
         verbose_name=_("Безопасность"), 
         on_delete=models.CASCADE,
@@ -453,7 +447,7 @@ class Property(models.Model):
         null=True,
         blank=True,
     )
-    miscellaneous = models.ForeignKey(
+    miscellaneous = models.OneToOneField(
         Miscellaneous, 
         verbose_name=_("Разное"), 
         on_delete=models.CASCADE,
@@ -461,19 +455,13 @@ class Property(models.Model):
         null=True,
         blank=True,
     )
-    documents = models.ForeignKey(
+    documents = models.OneToOneField(
         Documents, 
         verbose_name=_("Правоустанавливающие документы"), 
         on_delete=models.CASCADE,
         related_name='documents_property',
         null=True,
         blank=True,
-    )
-    contact_info = models.ForeignKey(
-        ContactInfo, 
-        verbose_name=_("Контактная информация"), 
-        on_delete=models.CASCADE,   
-        related_name='contact_info_property'
     )
     complex_name = models.ForeignKey(
         ResidentialCategory,
@@ -495,10 +483,16 @@ class Property(models.Model):
 class Pictures(models.Model):
     # Фотографии
     property = models.ForeignKey(Property, on_delete=models.CASCADE, related_name='properties_pictures')
-    pictures = models.ImageField(
-        upload_to='house/user/pictures/list/'
+    pictures = ResizedImageField(
+        force_format="WEBP", 
+        quality=75,
+        upload_to='house/user/pictures/list/',
     )
 
     class Meta:
         verbose_name = _("Фотография")
         verbose_name_plural = _("Фотографии")
+        
+
+class Like(models.Model):
+    pass

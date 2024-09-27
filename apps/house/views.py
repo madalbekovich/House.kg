@@ -9,13 +9,14 @@ from django_filters.rest_framework import DjangoFilterBackend
 # your import 
 from apps.house import models
 from apps.house import serializers
-from apps.house.utils import add_watermark
-from rest_framework.permissions import IsAuthenticated
 from apps.house import filters
+from apps.helpers import pagination
+from apps.helpers.permission import IsAdmin
 
 class ComplexView(viewsets.GenericViewSet):
     queryset = models.ResidentialCategory.objects.all()
     serializer_class = serializers.ResidentialCategorySerializer
+    permission_classes = [IsAdmin, ]
     
     @action(detail=False, methods=['get'])
     def complex_list(self, request, *args, **kwargs):
@@ -37,10 +38,10 @@ class CitiesView(viewsets.GenericViewSet):
     
 class PropertyView(viewsets.GenericViewSet):
     queryset = models.Property.objects.select_related(
-        'location' ,'documents', 'miscellaneous', 'contact_info', 'complex_name').all().order_by('-id')
+        'location' ,'documents', 'miscellaneous', 'complex_name').all().order_by('-id')
+    # TODO: Prefretch to images
     serializer_class = serializers.AddPropertySerializer
     filter_backends = [DjangoFilterBackend, ]
-    # permission_classes = [IsAuthenticated, ]
     filterset_class = filters.PropertyFilter
     
      
@@ -48,16 +49,21 @@ class PropertyView(viewsets.GenericViewSet):
     def add(self, request, *args, **kwargs):
         serializer = self.get_serializer(data=request.data)
         if serializer.is_valid():
-            serializer.save()
+            property_instance = serializer.save(user=request.user)
+            if 'properties_pictures' in request.data:
+                pictures_data = request.data.getlist('properties_pictures') 
+                for picture in pictures_data:
+                    models.Pictures.objects.create(pictures=picture, property=property_instance)
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
         
     @action(detail=False, methods=['get'])
-    def property(self, request, *args, **kwagrs):
-        print({"GETting data query": request.query_params})
-        instance = self.filter_queryset(self.get_queryset())
-        serializer = serializers.PropertySerializer(instance, many=True)
-        return Response(serializer.data, status=status.HTTP_200_OK)
+    def property(self, request, *args, **kwargs):
+        queryset = self.filter_queryset(self.get_queryset())
+        paginator = pagination.PropertyResultsPagination()
+        paginated_queryset = paginator.paginate_queryset(queryset, request)
+        serializer = serializers.PropertySerializer(paginated_queryset, many=True)
+        return paginator.get_paginated_response(serializer.data)
     
     @action(detail=True, methods=['delete'], url_path=None)
     def remove(self, request, *args, **kwargs):
