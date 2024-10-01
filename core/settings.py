@@ -30,6 +30,8 @@ INSTALLED_APPS = [
     # apps
     'apps.house',
     'apps.accounts',
+    'apps.main',
+    'apps.helpers.api',
     
 ]
 
@@ -152,7 +154,7 @@ EMAIL_PORT = 587
 EMAIL_HOST_USER = "noreply.businesskg@gmail.com"
 EMAIL_HOST_PASSWORD = "fozk fuet adlf jqvd"
 
-CELERY_BROKER_URL = "redis://localhost:6380/0"
+CELERY_BROKER_URL = "redis://localhost:6379/0"
 
 
                     ### LOGGER REQUEST ###
@@ -177,3 +179,13 @@ WATERMARK_PATH = 'media/watermark_logo/logo-1.png'
 
 GMAIL_TEMPLATE_ADD = '/home/madalbekovich/MProjects/House.kg/core/apps/helpers/send_mail_house.html'
 
+
+
+
+# HASHED_CODE
+
+HASHID_FIELD_MIN_LENGTH = 25
+
+HASHID_FIELD_LOOKUP_EXCEPTION = False
+
+HASHID_FIELD_SALT = 'EF92B778BAFE771E89245B89ECBC08A44A4E166C06659911881F383D4473E94F'

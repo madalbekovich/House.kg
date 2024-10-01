@@ -17,8 +17,8 @@ def add_watermark(sender, instance, created, **kwargs):
             watermark = Image.open(settings.WATERMARK_PATH).convert('RGBA')
             pictures_width, pictures_height = pictures.size
             watermark_width, watermark_height = watermark.size
-            x = pictures_width - watermark_width - 10  
-            y = pictures_height - watermark_height - 10
+            x = pictures_width - watermark_width
+            y = pictures_height - watermark_height
             pictures.paste(watermark, (x, y), watermark)
             pictures.save(instance.pictures.path)
             users = models.User.objects.all()

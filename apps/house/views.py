@@ -12,14 +12,14 @@ from apps.house import serializers
 from apps.house import filters
 from apps.helpers import pagination
 from apps.helpers.permission import IsAdmin
-
+from apps.house import mixins
 class ComplexView(viewsets.GenericViewSet):
     queryset = models.ResidentialCategory.objects.all()
     serializer_class = serializers.ResidentialCategorySerializer
     permission_classes = [IsAdmin, ]
     
     @action(detail=False, methods=['get'])
-    def complex_list(self, request, *args, **kwargs):
+    def complexes(self, request, *args, **kwargs):
         instance = models.ResidentialCategory.objects.filter(parent=None)
         serializer = self.get_serializer(instance, many=True)
         return Response(serializer.data, status=status.HTTP_200_OK)
@@ -28,15 +28,15 @@ class CitiesView(viewsets.GenericViewSet):
     queryset = models.Location.objects.all()
     serializer_class = serializers.RegionsSerializer
     
-    @action(detail=False, methods=['get'], url_path='regions')
-    def regions(self, request, *args, **kwargs):
-        city = request.query_params.get('city')
+    @action(detail=False, methods=['get'], url_path='cities')
+    def cities(self, request, *args, **kwargs):
+        city = request.query_params.get('town')
         region = models.Location.objects.filter(parent=None) if not city else \
             get_object_or_404(models.Location, id=city).get_children()
-        serializer = serializers.CitiesSerializer(region, many=True, context={"empty_㋡": True})  
+        serializer = self.get_serializer(region, many=True, context={"empty_㋡": True})  
         return Response(serializer.data, status=status.HTTP_200_OK)
     
-class PropertyView(viewsets.GenericViewSet):
+class PropertyView(viewsets.GenericViewSet, mixins.ViewsMixin):
     queryset = models.Property.objects.select_related(
         'location' ,'documents', 'miscellaneous', 'complex_name').all().order_by('-id')
     # TODO: Prefretch to images
@@ -57,13 +57,20 @@ class PropertyView(viewsets.GenericViewSet):
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
         
-    @action(detail=False, methods=['get'])
-    def property(self, request, *args, **kwargs):
+    @action(detail=False, methods=['get'], url_path='list')
+    def lists(self, request, *args, **kwargs):
         queryset = self.filter_queryset(self.get_queryset())
         paginator = pagination.PropertyResultsPagination()
         paginated_queryset = paginator.paginate_queryset(queryset, request)
-        serializer = serializers.PropertySerializer(paginated_queryset, many=True)
+        serializer = serializers.PropertyListSerializer(paginated_queryset, many=True)
         return paginator.get_paginated_response(serializer.data)
+    
+    @action(detail=True, methods=['get'], url_path='details')
+    def details(self, request, *args, **kwargs):
+        instance = self.get_object()
+        self.get_views(instance=instance)
+        seralizer = serializers.PropertyDetailSerializer(instance)
+        return Response(seralizer.data)
     
     @action(detail=True, methods=['delete'], url_path=None)
     def remove(self, request, *args, **kwargs):

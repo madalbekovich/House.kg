@@ -28,4 +28,5 @@ class SecurityInline(admin.TabularInline):
     
 @admin.register(models.Property)
 class Property(admin.ModelAdmin):
+    list_display = ['id', ]
     inlines = [PicteresInline,  ]

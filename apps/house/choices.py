@@ -67,6 +67,63 @@ BUILDING_TYPE_CHOICES = [
     ('Monolith', 'Монолитный'),
 ]
 
+CONDITION_CHOICES = [
+    ('Under finishing', 'Под самоотделку'),
+    ('Euro renovation', 'Евроремонт'),
+    ('Good', 'Хорошее'),
+    ('Average', 'Среднее'),
+    ('Not finished', 'Не достроено'),
+]
+
+CURRENCY_TYPE = [
+    ('USD', 'Доллар'),
+    ('SOM', 'Сом'),
+]
+
+PRICE_FOR = [
+    ('For the whole', 'За все'),
+    ('Per meter', 'За метр'),
+]
+
+# Характеристики 
+
+
+FLOOR_CHOICES = [
+    ('Linoleum', 'Линолеум'),
+    ('Parquet', 'Паркет'),
+    ('Laminate', 'Ламинат'),
+    ('Wood', 'Дерево'),
+    ('Carpet', 'Ковролин'),
+    ('Tile', 'Плитка'),
+    ('Cork flooring', 'Пробковое'),
+]
+
+ENTRANCE_DOOR_CHOICES = [
+    ('Wooden', 'Деревянная'),
+    ('Metal', 'Металлическая'),
+    ('Armored', 'Бронированная'),
+    ('No door', 'Нет'),
+]
+
+PARKING_CHOICES = [
+    ('Parking', 'Паркинг'),
+    ('Garage', 'Гараж'),
+    ('Nearby guarded parking', 'Рядом охраняемая стоянка'),
+]
+
+FURNITURE_CHOICES = [
+    ('Fully furnished', 'Полностью меблирована'),
+    ('Partially furnished', 'Частично меблирована'),
+    ('Unfurnished', 'Пустая'),
+]
+
+BALCONY_CHOICES = [
+    ('Balcony', 'Балкон'),
+    ('Glazed balcony', 'Застекленный балкон'),
+    ('Loggia', 'Лоджия'),
+    ('No balcony', 'Нет'),
+]
+
 HEATING_CHOICES = [
     ('Central', 'Центральное'),
     ('Gas', 'На газе'),
@@ -103,59 +160,33 @@ GAS_CHOICES = [
     ('Possible connection', 'Возможно подключение'),
     ('No gas', 'Нет'),
 ]
-
-CONDITION_CHOICES = [
-    ('Under finishing', 'Под самоотделку'),
-    ('Euro renovation', 'Евроремонт'),
-    ('Good', 'Хорошее'),
-    ('Average', 'Среднее'),
-    ('Not finished', 'Не достроено'),
+SEWAGE_CHOICES = [
+    ('central', 'Центральная'),
+    ('possible_connection', 'Возможно подведение'),
+    ('septic', 'Септик'),
+    ('no', 'Нет'),
 ]
 
-BALCONY_CHOICES = [
-    ('Balcony', 'Балкон'),
-    ('Glazed balcony', 'Застекленный балкон'),
-    ('Loggia', 'Лоджия'),
-    ('No balcony', 'Нет'),
+DRINKING_WATER_CHOICES = [
+    ('central_water_supply', 'Центральное водоснабжение'),
+    ('possible_connection', 'Возможно подведение'),
+    ('well', 'Скважина'),
+    ('no', 'Нет'),
 ]
 
-ENTRANCE_DOOR_CHOICES = [
-    ('Wooden', 'Деревянная'),
-    ('Metal', 'Металлическая'),
-    ('Armored', 'Бронированная'),
-    ('No door', 'Нет'),
+ELECTRICITY_CHOICES = [
+    ('yes', 'Есть'),
+    ('possible_connection', 'Возможно подведение'),
+    ('no', 'Нет'),
 ]
 
-PARKING_CHOICES = [
-    ('Parking', 'Паркинг'),
-    ('Garage', 'Гараж'),
-    ('Nearby guarded parking', 'Рядом охраняемая стоянка'),
-]
-
-FURNITURE_CHOICES = [
-    ('Fully furnished', 'Полностью меблирована'),
-    ('Partially furnished', 'Частично меблирована'),
-    ('Unfurnished', 'Пустая'),
-]
-
-FLOOR_CHOICES = [
-    ('Linoleum', 'Линолеум'),
-    ('Parquet', 'Паркет'),
-    ('Laminate', 'Ламинат'),
-    ('Wood', 'Дерево'),
-    ('Carpet', 'Ковролин'),
-    ('Tile', 'Плитка'),
-    ('Cork flooring', 'Пробковое'),
-]
-
-CURRENCY_TYPE = [
-    ('USD', 'Доллар'),
-    ('SOM', 'Сом'),
-]
-
-PRICE_FOR = [
-    ('For the whole', 'За все'),
-    ('Per meter', 'За метр'),
+LOCATION_CHOICES = [
+    ('in_city', 'В городе'),
+    ('along_road', 'Вдоль трассы'),
+    ('in_hills', 'В предгорьях'),
+    ('in_suburbs', 'В пригороде'),
+    ('near_water', 'Возле водоема'),
+    ('in_summer_cottage_area', 'В дачном массиве'),
 ]
 
 def year_choices():

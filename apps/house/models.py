@@ -5,6 +5,7 @@ from apps.accounts.models import User
 from apps.house import choices
 from apps.house.validators import ENIValidator, validate_youtube_url
 from django_resized import ResizedImageField
+from hashid_field import HashidAutoField
 
 class ResidentialCategory(MPTTModel):
     # Основные характеристики
@@ -256,11 +257,26 @@ class Documents(models.Model):
     class Meta:
         verbose_name = _("Правоустанавливающие документы")
         verbose_name_plural = _("Правоустанавливающие документы")
+        
+
+class Communication(models.Model):
+    has_light = models.BooleanField(default=False, verbose_name='Свет')
+    has_gas = models.BooleanField(default=False, verbose_name='Газ')
+    has_internet = models.BooleanField(default=False, verbose_name='Интернет')
+    has_heating = models.BooleanField(default=False, verbose_name='Отопление')
+    has_water = models.BooleanField(default=False, verbose_name='Вода')
+    has_phone = models.BooleanField(default=False, verbose_name='Телефон')
+    has_sewage = models.BooleanField(default=False, verbose_name='Канализация')
+
+    class Meta:
+        verbose_name = 'Коммуникации'
+        verbose_name_plural = 'Коммуникации'
     
 
 class Property(models.Model):
     
     # Основные характеристик
+    id = HashidAutoField(primary_key=True)
     user = models.ForeignKey(
         User,
         verbose_name=_("Пользователь"),
@@ -279,12 +295,16 @@ class Property(models.Model):
     room_count = models.CharField(
         _("Количество комнат"),
         max_length=50,
-        choices=choices.ROOM_COUNT_OPTIONS
+        choices=choices.ROOM_COUNT_OPTIONS,
+        null=True,
+        blank=True
     )
     type_series = models.CharField(
         _("Серия"),
         max_length=50,
         choices=choices.SERIES_CHOICES,
+        null=True,
+        blank=True
     )
     # type_rental = models.CharField(
     #     _("Период аренды"),
@@ -295,6 +315,8 @@ class Property(models.Model):
         _("Тип строения"),
         max_length=50,
         choices=choices.BUILDING_TYPE_CHOICES,
+        null=True,
+        blank=True
     )
     year_construction = models.IntegerField(
         _('Год построения'),
@@ -305,11 +327,15 @@ class Property(models.Model):
     )
     floor_number = models.CharField(
         _("Этаж"),
-        max_length=50
+        max_length=50,
+        null=True,
+        blank=True
     )
     total_floors = models.CharField(
         _("из всего этажей"),
-        max_length=50
+        max_length=50,
+        null=True,
+        blank=True
     )
     general = models.FloatField(
         _("общая"), 
@@ -327,6 +353,11 @@ class Property(models.Model):
         null=True, 
         blank=True
     )
+    land_area = models.IntegerField(
+        'Площадь учатска',
+        null=True,
+        blank=True,
+    )
     type_heating = models.CharField(
         _("Тип отопления"),
         max_length=50,
@@ -337,7 +368,9 @@ class Property(models.Model):
     type_condition = models.CharField(
         _("Состояние"),
         max_length=50,
-        choices=choices.CONDITION_CHOICES
+        choices=choices.CONDITION_CHOICES,
+        null=True,
+        blank=True
     )
     eni_code = models.CharField(
         _("Код ЕНИ"),
@@ -389,11 +422,11 @@ class Property(models.Model):
         blank=True,
     )
     description = models.TextField(
-        _("Описание")
+        _("Описание"),
     )
     price = models.DecimalField(
         _("Цена"), 
-        max_digits=5, 
+        max_digits=10, 
         decimal_places=2
     )
     currency = models.CharField(
@@ -432,6 +465,85 @@ class Property(models.Model):
         max_length=50, 
         choices=choices.ADVERTISER_OPTIONS
     )
+    phone_connection = models.CharField(
+        max_length=100,
+        null=True, 
+        blank=True,
+        choices=choices.PHONE_CHOICES,
+    )
+    drinking_water = models.CharField(
+        max_length=100,
+        null=True,
+        blank=True,
+        choices=choices.DRINKING_WATER_CHOICES,
+    )
+    sewage = models.CharField(
+        max_length=100,
+        null=True,
+        blank=True,
+        choices=choices.SEWAGE_CHOICES
+    )
+    electricity = models.CharField(
+        max_length=100,
+        null=True,
+        blank=True,
+        choices=choices.ELECTRICITY_CHOICES,
+    )
+    disposition_object = models.CharField(
+        max_length=100,
+        null=True,
+        blank=True,
+        choices=choices.LOCATION_CHOICES,
+        verbose_name='Расположение обьекта'
+    )
+    bathroom = models.CharField(
+        max_length=100,
+        null=True,
+        blank=True,
+        choices=choices.BATHROOM_CHOICES,
+    )
+    parking = models.CharField(
+        max_length=100,
+        null=True,
+        blank=True,
+        choices=choices.PARKING_CHOICES,
+    )
+    balkony = models.CharField(
+        max_length=100,
+        null=True,
+        blank=True,
+        choices=choices.BALCONY_CHOICES,            
+    )
+    front_door = models.CharField(
+        max_length=100,
+        null=True,
+        blank=True,
+        choices=choices.ENTRANCE_DOOR_CHOICES,
+    )
+    furniture = models.CharField(
+        max_length=100,
+        null=True,
+        blank=True,
+        choices=choices.FURNITURE_CHOICES,
+    )
+    gas = models.CharField(
+        max_length=100,
+        null=True,
+        blank=True,
+        choices=choices.GAS_CHOICES,
+    )
+    internet = models.CharField(
+        max_length=100,
+        blank=True,
+        null=True,
+        choices=choices.INTERNET_CHOICES,
+    )
+    floor = models.CharField(
+        max_length=100,
+        null=True, 
+        blank=True,
+        choices=choices.FLOOR_CHOICES
+    )
     # TODO: comment_to_property = 
     phone_number = models.CharField(
         max_length=16,
@@ -439,6 +551,11 @@ class Property(models.Model):
         null=True,
         blank=True,
     )
+    views = models.PositiveIntegerField(
+        blank=True,
+        default=1
+    )
+    
     security = models.OneToOneField(
         Security, 
         verbose_name=_("Безопасность"), 
@@ -460,6 +577,13 @@ class Property(models.Model):
         verbose_name=_("Правоустанавливающие документы"), 
         on_delete=models.CASCADE,
         related_name='documents_property',
+        null=True,
+        blank=True,
+    )
+    communication = models.ForeignKey(
+        Communication, 
+        verbose_name=_("Коммуникации"),
+        on_delete=models.CASCADE,
         null=True,
         blank=True,
     )
@@ -493,6 +617,3 @@ class Pictures(models.Model):
         verbose_name = _("Фотография")
         verbose_name_plural = _("Фотографии")
         
-
-class Like(models.Model):
-    pass
