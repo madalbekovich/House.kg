@@ -54,10 +54,7 @@ class RegionsSerializer(serializers.ModelSerializer, mixins.HierarchicalMixin):
 class PicturesListSerializer(serializers.ModelSerializer):
     pictures = VersatileImageFieldSerializer(
         sizes=[
-            # ('full_size', 'url'),
-            # ('thumbnail', 'thumbnail__100x100'),
-            ('medium_size', 'crop__400x400'),
-            # ('small_square_crop', 'crop__50x50')
+            ('medium_size', 'crop__400x400')
         ]
     )
     class Meta:
@@ -81,7 +78,7 @@ class AddPropertySerializer(WritableNestedModelSerializer):
     miscellaneous = MiscellaneousSerializer(required=False)
     documents = DocumentsSerializer(required=False)
     communication = CommunicationSerializer(required=False)
-    properties_pictures = PicturesListSerializer(many=True, required=False)
+    properties_pictures = PicturesDetailSerializer(many=True, required=False)
     class Meta:
         model = models.Property
         fields = [
@@ -141,7 +138,7 @@ class PropertyDetailSerializer(serializers.ModelSerializer, mixins.BaseMixin):
 
 class PropertyListSerializer(serializers.ModelSerializer, mixins.BaseMixin):
     id = serializers.CharField()
-    properties_pictures = PicturesListSerializer(many=True, read_only=True)
+    properties_pictures = serializers.SerializerMethodField()
     location = RegionsSerializer()
     description = serializers.SerializerMethodField()
     _usd_course = serializers.SerializerMethodField()
@@ -161,3 +158,7 @@ class PropertyListSerializer(serializers.ModelSerializer, mixins.BaseMixin):
     def get__usd_course(self, instance):
         instance = Currency.objects.first()
         return instance.usd_course if instance and instance.usd_course else 'System error fx.kg'
+    
+    def get_properties_pictures(self, obj):
+        return PicturesListSerializer(obj.properties_pictures.first()).data \
+            if obj.properties_pictures.exists() else None

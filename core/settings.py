@@ -26,12 +26,14 @@ INSTALLED_APPS = [
     'corsheaders',
     'rest_framework',
     'django_filters',
+    'versatileimagefield',
     
     # apps
     'apps.house',
     'apps.accounts',
     'apps.main',
     'apps.helpers.api',
+    'sorl.thumbnail'
     
 ]
 
@@ -91,7 +93,7 @@ AUTH_PASSWORD_VALIDATORS = [
 ]
 
 
-LANGUAGE_CODE = 'en-us'
+LANGUAGE_CODE = 'ru'
 
 TIME_ZONE = 'UTC'
 

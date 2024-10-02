@@ -1,6 +1,7 @@
 from celery import shared_task
 import requests
 from apps.helpers.api import models
+
 @shared_task()
 def get_current_cy():
     URL = 'https://data.fx.kg/api/v1/central'
