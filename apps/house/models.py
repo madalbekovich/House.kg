@@ -5,6 +5,7 @@ from apps.accounts.models import User
 from apps.house import choices
 from apps.house.validators import ENIValidator, validate_youtube_url
 from django_resized import ResizedImageField
+from versatileimagefield.fields import VersatileImageField
 from hashid_field import HashidAutoField
 
 class ResidentialCategory(MPTTModel):
@@ -607,11 +608,14 @@ class Property(models.Model):
 class Pictures(models.Model):
     # Фотографии
     property = models.ForeignKey(Property, on_delete=models.CASCADE, related_name='properties_pictures')
-    pictures = ResizedImageField(
-        force_format="WEBP", 
-        quality=75,
+    pictures = VersatileImageField(
         upload_to='house/user/pictures/list/',
     )
+    # pictures = ResizedImageField(
+    #     force_format="WEBP", 
+    #     quality=75,
+    #     upload_to='house/user/pictures/list/',
+    # )
 
     class Meta:
         verbose_name = _("Фотография")

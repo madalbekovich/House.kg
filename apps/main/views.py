@@ -7,7 +7,6 @@ from apps.main import models
 from apps.main import serializers
 
 class CommentView(viewsets.GenericViewSet):
-    # TODO: finalize prefretch_related
     queryset = models.Comments.objects.all().order_by('-id')
     serializer_class = serializers.CommentSerializer
     

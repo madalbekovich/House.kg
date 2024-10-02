@@ -3,6 +3,7 @@ from apps.house import models
 from apps.house import mixins
 from drf_writable_nested import WritableNestedModelSerializer
 from apps.helpers.api.models import Currency
+from versatileimagefield.serializers import VersatileImageFieldSerializer
 from apps.main.serializers import CommentListSerializer
 
 
@@ -50,7 +51,25 @@ class RegionsSerializer(serializers.ModelSerializer, mixins.HierarchicalMixin):
         ]
         
         
-class PicturesSerializer(serializers.ModelSerializer):
+class PicturesListSerializer(serializers.ModelSerializer):
+    pictures = VersatileImageFieldSerializer(
+        sizes=[
+            # ('full_size', 'url'),
+            # ('thumbnail', 'thumbnail__100x100'),
+            ('medium_size', 'crop__400x400'),
+            # ('small_square_crop', 'crop__50x50')
+        ]
+    )
+    class Meta:
+        model = models.Pictures
+        fields = ['pictures', ]
+        
+class PicturesDetailSerializer(serializers.ModelSerializer):
+    pictures = VersatileImageFieldSerializer(
+        sizes=[
+            ('full_size', 'url'),
+        ]
+    )
     class Meta:
         model = models.Pictures
         fields = ['pictures', ]
@@ -62,7 +81,7 @@ class AddPropertySerializer(WritableNestedModelSerializer):
     miscellaneous = MiscellaneousSerializer(required=False)
     documents = DocumentsSerializer(required=False)
     communication = CommunicationSerializer(required=False)
-    properties_pictures = PicturesSerializer(many=True, required=False)
+    properties_pictures = PicturesListSerializer(many=True, required=False)
     class Meta:
         model = models.Property
         fields = [
@@ -91,11 +110,10 @@ class UserInfoSerializer(serializers.ModelSerializer):
         model = models.User
         fields = ['username', '_avatar']
     
-from collections import OrderedDict    
-        
 class PropertyDetailSerializer(serializers.ModelSerializer, mixins.BaseMixin):
     user = UserInfoSerializer()
     id = serializers.CharField()
+    properties_pictures = PicturesDetailSerializer(many=True, read_only=True)
     comments = serializers.SerializerMethodField()
 
 
@@ -114,7 +132,7 @@ class PropertyDetailSerializer(serializers.ModelSerializer, mixins.BaseMixin):
             'bathroom', 'parking', 'balkony', 'front_door', 'furniture', 
             'gas', 'internet', 'floor', 'phone_number', 'views', 
             'location', 'security', 'miscellaneous', 'documents', 
-            'communication', 'complex_name', 'comments'  
+            'communication', 'complex_name', 'properties_pictures', 'comments'  
         ]
         depth = 1
 
@@ -123,7 +141,7 @@ class PropertyDetailSerializer(serializers.ModelSerializer, mixins.BaseMixin):
 
 class PropertyListSerializer(serializers.ModelSerializer, mixins.BaseMixin):
     id = serializers.CharField()
-    properties_pictures = PicturesSerializer(many=True, read_only=True)
+    properties_pictures = PicturesListSerializer(many=True, read_only=True)
     location = RegionsSerializer()
     description = serializers.SerializerMethodField()
     _usd_course = serializers.SerializerMethodField()
