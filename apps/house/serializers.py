@@ -7,15 +7,11 @@ from versatileimagefield.serializers import VersatileImageFieldSerializer
 from apps.main.serializers import CommentListSerializer
 
 
-class ResidentialCategorySerializer(serializers.ModelSerializer, mixins.HierarchicalMixin):
-    children = serializers.SerializerMethodField()
+class ResidentialCategorySerializer(serializers.ModelSerializer):
     class Meta:
         model = models.ResidentialCategory
-        fields = ['id', 'complex_name', 'building_date', 'level', 'parent', 'children']
-    
-    def get_children(self, instance):
-        return super().base_method(instance)
-
+        fields = '__all__'
+        
 
 class MiscellaneousSerializer(serializers.ModelSerializer):
     class Meta:

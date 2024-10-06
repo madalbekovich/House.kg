@@ -42,6 +42,7 @@ def run_migrations():
         print(Fore.CYAN + "Applying migrations...")
         result = subprocess.run(['python', 'manage.py', 'migrate'], check=True, capture_output=True, text=True)
         print(Fore.GREEN + "\rMigrations applied successfully! " + Style.BRIGHT + "✓")
+        subprocess.run(['python', 'manage.py', 'runserver'])
         print(Fore.GREEN + "-" * 50)
         print(Fore.GREEN + result.stdout)
     except subprocess.CalledProcessError as e:

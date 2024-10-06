@@ -13,6 +13,9 @@ from apps.house import filters
 from apps.helpers import pagination
 from apps.helpers.permission import IsAdmin
 from apps.house import mixins
+from apps.house.tasks import delete_post
+
+
 class ComplexView(viewsets.GenericViewSet):
     queryset = models.ResidentialCategory.objects.all()
     serializer_class = serializers.ResidentialCategorySerializer
@@ -20,7 +23,7 @@ class ComplexView(viewsets.GenericViewSet):
     
     @action(detail=False, methods=['get'])
     def complexes(self, request, *args, **kwargs):
-        instance = models.ResidentialCategory.objects.filter(parent=None)
+        instance = self.get_queryset()
         serializer = self.get_serializer(instance, many=True)
         return Response(serializer.data, status=status.HTTP_200_OK)
 
@@ -31,6 +34,13 @@ class CitiesView(viewsets.GenericViewSet):
     @action(detail=False, methods=['get'], url_path='cities')
     def cities(self, request, *args, **kwargs):
         city = request.query_params.get('town')
+        all_id = request.query_params.get('all')
+        
+        if all_id:
+            general_location_query = get_object_or_404(models.Location, id=all_id)
+            serializer = self.get_serializer(general_location_query, context={'empty_㋡: True'})
+            return Response(serializer.data, status=status.HTTP_200_OK)
+        
         region = models.Location.objects.filter(parent=None) if not city else \
             get_object_or_404(models.Location, id=city).get_children()
         serializer = self.get_serializer(region, many=True, context={"empty_㋡": True})  
@@ -72,11 +82,19 @@ class PropertyView(viewsets.GenericViewSet, mixins.ViewsMixin):
         seralizer = serializers.PropertyDetailSerializer(instance)
         return Response(seralizer.data)
     
-    @action(detail=True, methods=['delete'], url_path=None)
-    def remove(self, request, *args, **kwargs):
+    @action(detail=True, methods=['get'], url_path=None)
+    def post_control(self, request, *args, **kwargs):
         instance = self.get_object()
-        instance.delete()
-        return Response({"pohui": True}, status=status.HTTP_200_OK)
+        activate = request.query_params.get('activate', 'false').lower() == 'true'
+        if activate:
+            instance.active_post = True
+            instance.save()
+            return Response({"message ": "Post activated!"}, status=status.HTTP_200_OK)
+        instance.active_post = False
+        instance.save()
+        instance_id = str(instance.id)
+        delete_post.delay(instance_id)
+        return Response({"message": "Post archived!"}, status=status.HTTP_200_OK)
     
     @action(detail=True, methods=['patch'], url_path=None)
     def edit(self, request, *args, **kwargs):

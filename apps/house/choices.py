@@ -180,6 +180,14 @@ ELECTRICITY_CHOICES = [
     ('no', 'Нет'),
 ]
 
+OBJECT_STATE = [
+    ('scheduled', 'запланирован'),
+    ('under construction', 'строится'),
+    ('finalized', 'завершен'),
+    ('commissioned', 'сдан в эксплуатацию'),
+    ('frozen', 'заморожен')
+]
+
 LOCATION_CHOICES = [
     ('in_city', 'В городе'),
     ('along_road', 'Вдоль трассы'),
@@ -187,6 +195,13 @@ LOCATION_CHOICES = [
     ('in_suburbs', 'В пригороде'),
     ('near_water', 'Возле водоема'),
     ('in_summer_cottage_area', 'В дачном массиве'),
+]
+
+HOUSING_CLASS = [
+    ('econom', 'эконом'),
+    ('comfort', 'комфорт'),
+    ('business', 'бизнес'),
+    ('premuim', 'премуим'),
 ]
 
 def year_choices():
