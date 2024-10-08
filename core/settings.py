@@ -26,6 +26,7 @@ INSTALLED_APPS = [
     'rest_framework.authtoken',
     'corsheaders',
     'rest_framework',
+    'rest_framework_gis',
     'django_filters',
     'versatileimagefield',
     'leaflet',
@@ -74,8 +75,12 @@ WSGI_APPLICATION = 'core.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.contrib.gis.db.backends.postgis',
+        'NAME': 'postgres',
+        'USER': 'talasbek',
+        'PASSWORD': 'bpsyx@MN51',
+        'HOST': 'localhost',
+        'PORT': '',
     }
 }
 

@@ -12,7 +12,7 @@ admin.site.unregister(Group)
 
 @admin.register(models.User)
 class UserAdmin(UserAdmin):
-    list_display = ('get_avatar', 'username', 'name', 'is_active', 'date_joined')
+    list_display = ('get__avatar', 'username', 'name', 'is_active', 'date_joined')
     ordering = ('-date_joined',)
 
     search_fields = ('username', 'name',)
@@ -29,9 +29,9 @@ class UserAdmin(UserAdmin):
         (_('Важные даты'), {'fields': ('last_login', 'date_joined')}),
     )
 
-    def get_avatar(self, obj):
-        if obj.avatar:
-            return mark_safe(f'<img style="border-radius: 50%;" src="{obj.avatar}" width="50" height="50" />')
+    def get__avatar(self, obj):
+        if obj._avatar:
+            return mark_safe(f'<img style="border-radius: 50%;" src="{obj._avatar}" width="50" height="50" />')
         return "No Avatar"
 
-    get_avatar.short_description = 'Avatar'
+    get__avatar.short_description = 'Avatar'

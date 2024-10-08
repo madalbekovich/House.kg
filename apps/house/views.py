@@ -70,6 +70,7 @@ class PropertyView(viewsets.GenericViewSet, mixins.ViewsMixin):
     @action(detail=False, methods=['get'], url_path='list')
     def lists(self, request, *args, **kwargs):
         queryset = self.filter_queryset(self.get_queryset())
+        print(queryset)
         paginator = pagination.PropertyResultsPagination()
         paginated_queryset = paginator.paginate_queryset(queryset, request)
         serializer = serializers.PropertyListSerializer(paginated_queryset, many=True)

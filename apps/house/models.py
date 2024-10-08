@@ -5,7 +5,8 @@ from versatileimagefield.fields import VersatileImageField
 from hashid_field import HashidAutoField
 from mptt.models import MPTTModel, TreeForeignKey
 from django.core.validators import MaxValueValidator, MinValueValidator
-from django_admin_geomap import GeoItem
+from django_admin_geomap import GeoItem 
+from django.contrib.gis.db.models import PointField
 
 from apps.accounts.models import User
 from apps.house import choices
@@ -105,31 +106,33 @@ class ResidentialCategory(models.Model, GeoItem):
 class Location(MPTTModel):
     # Локация
     city = models.CharField(max_length=255)
-    lat = models.DecimalField(
-        max_digits=9, 
-        decimal_places=6, 
+    lat = models.FloatField(
         blank=True, 
         null=True
     )
-    lng = models.DecimalField(
-        max_digits=9, 
-        decimal_places=6, 
+    lng = models.FloatField(
         blank=True, 
         null=True
     )
-    population = models.IntegerField(
+    population = models.CharField(
+        max_length=100,
         blank=True, 
         null=True
     )
     iso2 = models.CharField(
-        max_length=2, 
+        max_length=10, 
         blank=True, 
         null=True
     )
     capital = models.CharField(
-        max_length=50, 
+        max_length=100, 
         blank=True, 
         null=True
+    )
+    admin_name = models.CharField(
+        max_length=100,
+        null=True,
+        blank=True,
     )
     parent = TreeForeignKey(
         'self', 
@@ -471,16 +474,7 @@ class Property(models.Model):
         null=True, 
         blank=True
     )
-    lat = models.DecimalField(
-        _('Широта'),
-        max_digits=9,
-        decimal_places=6
-    )
-    lon = models.DecimalField(
-        _('Долгата'),
-        max_digits=9,
-        decimal_places=6
-    )
+    point = PointField(null=True, blank=True) 
     youtube_url = models.URLField(
         _('Ссылка на видео'),
         max_length=200,
@@ -678,7 +672,7 @@ class Property(models.Model):
         verbose_name_plural = _("Недвижимость")
 
     def __str__(self):
-        return f"{self.location} - or None "
+        return f"{self.id} - {self.price} "
 
 
 class Pictures(models.Model):

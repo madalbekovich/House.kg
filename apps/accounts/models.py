@@ -60,6 +60,5 @@ class User(AbstractUser, BaseModel):
         super(User, self).save(*args, **kwargs)
 
     class Meta:
-        ordering = ('-date_joined',)
         verbose_name = _('User')
         verbose_name_plural = _('Users')

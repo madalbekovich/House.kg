@@ -1,11 +1,14 @@
 # packages
 from django_filters import rest_framework as filters
+from rest_framework_gis.filterset import GeoFilterSet
+from rest_framework_gis.filters import GeometryFilter
 
 # your import 
 from apps.house import models
 from apps.house import choices
 
-class PropertyFilter(filters.FilterSet):
+class PropertyFilter(GeoFilterSet, filters.FilterSet):
+    polygon = GeometryFilter(field_name='point', lookup_expr='within')
     location = filters.CharFilter(field_name='location__city')
     type_deal = filters.ChoiceFilter(field_name='type_deal', choices=choices.TYPE_DEAL)
     type_property = filters.ChoiceFilter(field_name='type_property',  choices=choices.PROPERTY_TYPE_OPTIONS)
@@ -19,11 +22,16 @@ class PropertyFilter(filters.FilterSet):
     exchange_type = filters.ChoiceFilter(field_name='exchange_type', choices=choices.EXCHANGE_OPTIONS, label='Возможен обмен')
     mortage_type = filters.ChoiceFilter(field_name='mortage_type', choices=choices.MORTGAGE_OPTIONS, label='Возможна ипотека')
     advertiser_type = filters.ChoiceFilter(field_name='contact_info__advertiser_type', choices=choices.ADVERTISER_OPTIONS, label='От собственника')
+    start_date = filters.DateFilter(field_name='created_at', lookup_expr='gte')
+    end_date = filters.DateFilter(field_name='created_at', lookup_expr='lte')
     
     class Meta:
         model = models.Property
         fields = [
+            'polygon',
             'location', 'type_deal', 'type_property', 'room', 
             'price_min', 'price_max', 'miscellaneous', 'year_min', 
-            'year_max', 'exchange_type', 'mortage_type', 'advertiser_type'
+            'year_max', 'exchange_type', 'mortage_type', 'advertiser_type', 'currency',
+            'start_date', 'end_date'
         ]
+        

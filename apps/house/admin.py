@@ -10,7 +10,7 @@ from django.utils.safestring import mark_safe
 class LocationAdmin(MPTTModelAdmin):
     list_display = ('id', 'city', 'parent')
     search_fields = ('city', 'id')
-
+    
 @admin.register(models.ResidentialCategory)
 class CategoryAdmin(MapAdmin):
     geomap_field_longitude = "id_lon"
