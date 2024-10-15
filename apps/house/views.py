@@ -23,6 +23,13 @@ class ComplexView(viewsets.GenericViewSet):
     
     @action(detail=False, methods=['get'])
     def complexes(self, request, *args, **kwargs):
+        complex_id = request.query_params.get('complex_id')
+        
+        if complex_id:
+            query_complex = get_object_or_404(models.ResidentialCategory, id=complex_id)
+            serializer_complex = serializers.ResidentialCategorySerializer(query_complex).data
+            return Response(serializer_complex, status=status.HTTP_200_OK)
+    
         instance = self.get_queryset()
         serializer = self.get_serializer(instance, many=True)
         return Response(serializer.data, status=status.HTTP_200_OK)
@@ -33,8 +40,12 @@ class CitiesView(viewsets.GenericViewSet):
     
     @action(detail=False, methods=['get'], url_path='cities')
     def cities(self, request, *args, **kwargs):
+        """
+        town - get detailed information about the region and including its cities
+        detail - get detailed information about the region
+        """
         city = request.query_params.get('town')
-        all_id = request.query_params.get('all')
+        all_id = request.query_params.get('detail')
         
         if all_id:
             general_location_query = get_object_or_404(models.Location, id=all_id)

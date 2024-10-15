@@ -1,11 +1,14 @@
 from rest_framework import serializers
 from apps.house import models
 from apps.house import mixins
+from apps.main.models import Comments, ContentType
 from drf_writable_nested import WritableNestedModelSerializer
 from apps.helpers.api.models import Currency
 from versatileimagefield.serializers import VersatileImageFieldSerializer
 from apps.main.serializers import CommentListSerializer
+from django.utils.timesince import timesince
 from rest_framework_gis.serializers import GeoModelSerializer
+from django.db.models import Count
 
 
 class ResidentialCategorySerializer(serializers.ModelSerializer):
@@ -104,8 +107,16 @@ class UserInfoSerializer(serializers.ModelSerializer):
         model = models.User
         fields = ['username', '_avatar']
     
+    def to_representation(self, instance):
+        representation = super().to_representation(instance)
+        posted_count = models.Property.objects.filter(user=instance).count()
+        representation['reviews_count'] = 23
+        representation['accommodation_count'] = posted_count
+        return representation
+    
 class PropertyDetailSerializer(GeoModelSerializer, serializers.ModelSerializer, mixins.BaseMixin):
     user = UserInfoSerializer()
+    added_at = serializers.SerializerMethodField()
     id = serializers.CharField()
     properties_pictures = PicturesDetailSerializer(many=True, read_only=True)
     comments = serializers.SerializerMethodField()
@@ -115,7 +126,7 @@ class PropertyDetailSerializer(GeoModelSerializer, serializers.ModelSerializer, 
         model = models.Property
         geo_field = "point"
         fields = [
-            'id', 'user', 'type_deal', 'type_property', 'room_count', 
+            'id', 'user', 'added_at', 'type_deal', 'type_property', 'room_count', 
             'type_series', 'type_building', 'year_construction', 
             'floor_number', 'total_floors', 'general', 'residential', 
             'kitchen', 'land_area', 'type_heating', 'type_condition', 
@@ -127,13 +138,22 @@ class PropertyDetailSerializer(GeoModelSerializer, serializers.ModelSerializer, 
             'bathroom', 'parking', 'balkony', 'front_door', 'furniture', 
             'gas', 'internet', 'floor', 'phone_number', 'views', 
             'location', 'security', 'miscellaneous', 'documents', 
-            'communication', 'complex_name', 'properties_pictures', 'comments'  
+            'communication', 'complex_name', 'properties_pictures', 'comments',
         ]
         depth = 1
 
     def get_comments(self, obj):
         return super().get_comments(obj, CommentListSerializer)
-
+    
+    def get_added_at(self, obj):
+        return timesince(obj.created_at)
+    
+    def to_representation(self, instance):
+        representation = super().to_representation(instance)
+        representation['count_comment'] = 0
+        representation['count_favorite'] = 0
+        return representation
+        
 class PropertyListSerializer(serializers.ModelSerializer, mixins.BaseMixin):
     id = serializers.CharField()
     properties_pictures = serializers.SerializerMethodField()
@@ -144,7 +164,7 @@ class PropertyListSerializer(serializers.ModelSerializer, mixins.BaseMixin):
     class Meta:
         model = models.Property
         fields = [
-            'id', 'type_property', 'room_count', 'general', 'land_area',
+            'id', 'advertiser_type', 'type_property', 'room_count', 'general', 'land_area',
             'street', 'house_number', 'description', 'price', 'currency', 'location', 'views', '_usd_course',
             'properties_pictures'
         ]

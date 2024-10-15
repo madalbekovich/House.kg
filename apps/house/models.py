@@ -418,7 +418,7 @@ class Property(models.Model):
         null=True, 
         blank=True
     )
-    ceiling_height = models.CharField(
+    ceiling_height = models.FloatField(
         _("Высота потолков"),
         max_length=50,
         null=True,
@@ -445,7 +445,6 @@ class Property(models.Model):
     )
     eni_code = models.CharField(
         _("Код ЕНИ"),
-        max_length=10,
         validators=[ENIValidator],
         null=True,
         blank=True,

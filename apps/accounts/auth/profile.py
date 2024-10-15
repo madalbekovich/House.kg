@@ -13,7 +13,6 @@ import requests
 
 from PIL import Image
 from django.conf import settings
-# from user_agents import parse
 
 from apps.helpers.exceptions import BadRequest
 from apps.accounts.models import User
@@ -26,13 +25,13 @@ class ProfileSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = User
-        fields = ("id", "username", "name", "last_name", "is_active", "_avatar", "balance")
+        fields = ("id", "username", "phone", "name", "is_active", "_avatar", "balance", "language")
 
 
 class ProfileUpdateSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
-        fields = ("name", "last_name",)
+        fields = ("name", "language")
 
 
 class UserAvatarSerializer(serializers.Serializer):
@@ -77,7 +76,6 @@ class ProfileViewSet(
         user = request.user
 
         data = self.serializer_class(user).data
-        data["token"] = f"{Token.objects.get(user=user)}"
         data["dates"] = {
             "date_joined": f"{user.date_joined}",
             "last_login": f"{user.last_login}",
