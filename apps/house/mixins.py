@@ -20,12 +20,6 @@ class ViewsMixin:
 
 class BaseMixin:
     
-    def shortener_world(self, instance, field):
-        value = getattr(instance, field, None)
-        if isinstance(value, str) and len(value) >= 150:
-            return value[:150] + "...."
-        return value
-
     def get_comments(self, obj, serializer_class):
         content_type = models.ContentType.objects.get_for_model(obj.__class__)
         comments = models.Comments.objects.filter(parent=None, content_type=content_type, object_id=obj.id)

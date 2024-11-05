@@ -2,7 +2,9 @@ from django.db import models
 from django.contrib.contenttypes.models import ContentType
 from django.contrib.contenttypes.fields import GenericForeignKey
 from mptt.models import MPTTModel, TreeForeignKey
-from apps.accounts.models import User
+from apps.accounts.models import User, BusinessAccount
+from django.core.validators import MaxValueValidator, MinValueValidator
+from django.db.models import Avg
 
 
 class Comments(MPTTModel):
@@ -20,3 +22,21 @@ class Comments(MPTTModel):
     
     def __str__(self):
         return self.content
+    
+    @property
+    def count_comment(self):
+        return Comments.objects.filter(
+            content_type=self.content_type,
+            object_id=self.object_id
+        ).count() or 0
+    
+
+class Review(models.Model):
+    user = models.ForeignKey(User, null=True, blank=True, on_delete=models.SET_NULL)
+    company = models.ForeignKey(BusinessAccount, null=True, blank=True, on_delete=models.SET_NULL)
+    rating = models.PositiveIntegerField(validators=[MaxValueValidator(5)])
+    comment = models.TextField()
+    
+    @staticmethod
+    def get_average_rating(user):
+        return Review.objects.filter(user=user).aggregate(Avg('rating'))['rating__avg'] or 0

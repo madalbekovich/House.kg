@@ -1,0 +1,384 @@
+{
+    "outcome": "success",
+    "data": {
+        "offset": "0",
+        "limit": "1",
+        "count": "10940",
+        "list": [
+            {
+                "id": 936481,
+                "region": 1,
+                "town": 2,
+                "category": 1,
+                "comment_allowed": 3,
+                "created_at": "2024-10-25 20:10:50",
+                "updated_at": "2024-10-25 20:10:50",
+                "upped_at": "2024-11-01 16:24:02",
+                "images": [
+                    {
+                        "id": 4012556,
+                        "thumb": "https://cdn.house.kg/house/images/7/e/b/7eb7dff991841f1aa64a751c0a78d6e2_240x180.jpg",
+                        "square": "https://cdn.house.kg/house/images/7/e/b/7eb7dff991841f1aa64a751c0a78d6e2_400x400.jpg",
+                        "medium": "https://cdn.house.kg/house/images/7/e/b/7eb7dff991841f1aa64a751c0a78d6e2_640x480.jpg",
+                        "big": "https://cdn.house.kg/house/images/7/e/b/7eb7dff991841f1aa64a751c0a78d6e2_1200x900.jpg"
+                    },
+                    {
+                        "id": 4012557,
+                        "thumb": "https://cdn.house.kg/house/images/2/1/2/212d06ea4213c1dd4b493bf8b33b7dd9_240x180.jpg",
+                        "square": "https://cdn.house.kg/house/images/2/1/2/212d06ea4213c1dd4b493bf8b33b7dd9_400x400.jpg",
+                        "medium": "https://cdn.house.kg/house/images/2/1/2/212d06ea4213c1dd4b493bf8b33b7dd9_640x480.jpg",
+                        "big": "https://cdn.house.kg/house/images/2/1/2/212d06ea4213c1dd4b493bf8b33b7dd9_1200x900.jpg"
+                    },
+                    {
+                        "id": 4012558,
+                        "thumb": "https://cdn.house.kg/house/images/1/0/9/109d862089cffaaf71812f4dea5d6cca_240x180.jpg",
+                        "square": "https://cdn.house.kg/house/images/1/0/9/109d862089cffaaf71812f4dea5d6cca_400x400.jpg",
+                        "medium": "https://cdn.house.kg/house/images/1/0/9/109d862089cffaaf71812f4dea5d6cca_640x480.jpg",
+                        "big": "https://cdn.house.kg/house/images/1/0/9/109d862089cffaaf71812f4dea5d6cca_1200x900.jpg"
+                    },
+                    {
+                        "id": 4012559,
+                        "thumb": "https://cdn.house.kg/house/images/e/6/4/e6425fb85ff8cf751079ef697f21c727_240x180.jpg",
+                        "square": "https://cdn.house.kg/house/images/e/6/4/e6425fb85ff8cf751079ef697f21c727_400x400.jpg",
+                        "medium": "https://cdn.house.kg/house/images/e/6/4/e6425fb85ff8cf751079ef697f21c727_640x480.jpg",
+                        "big": "https://cdn.house.kg/house/images/e/6/4/e6425fb85ff8cf751079ef697f21c727_1200x900.jpg"
+                    },
+                    {
+                        "id": 4012560,
+                        "thumb": "https://cdn.house.kg/house/images/c/a/5/ca55bf8224e7b77728c91644b253650f_240x180.jpg",
+                        "square": "https://cdn.house.kg/house/images/c/a/5/ca55bf8224e7b77728c91644b253650f_400x400.jpg",
+                        "medium": "https://cdn.house.kg/house/images/c/a/5/ca55bf8224e7b77728c91644b253650f_640x480.jpg",
+                        "big": "https://cdn.house.kg/house/images/c/a/5/ca55bf8224e7b77728c91644b253650f_1200x900.jpg"
+                    },
+                    {
+                        "id": 4012561,
+                        "thumb": "https://cdn.house.kg/house/images/2/2/b/22b02c3a551dc73a0a1667c53433007e_240x180.jpg",
+                        "square": "https://cdn.house.kg/house/images/2/2/b/22b02c3a551dc73a0a1667c53433007e_400x400.jpg",
+                        "medium": "https://cdn.house.kg/house/images/2/2/b/22b02c3a551dc73a0a1667c53433007e_640x480.jpg",
+                        "big": "https://cdn.house.kg/house/images/2/2/b/22b02c3a551dc73a0a1667c53433007e_1200x900.jpg"
+                    },
+                    {
+                        "id": 4012562,
+                        "thumb": "https://cdn.house.kg/house/images/d/6/1/d612f2d4151367b7fa5eaac982727037_240x180.jpg",
+                        "square": "https://cdn.house.kg/house/images/d/6/1/d612f2d4151367b7fa5eaac982727037_400x400.jpg",
+                        "medium": "https://cdn.house.kg/house/images/d/6/1/d612f2d4151367b7fa5eaac982727037_640x480.jpg",
+                        "big": "https://cdn.house.kg/house/images/d/6/1/d612f2d4151367b7fa5eaac982727037_1200x900.jpg"
+                    },
+                    {
+                        "id": 4012563,
+                        "thumb": "https://cdn.house.kg/house/images/5/7/9/5792d0c46dcff9bb7b7b0f6303b28303_240x180.jpg",
+                        "square": "https://cdn.house.kg/house/images/5/7/9/5792d0c46dcff9bb7b7b0f6303b28303_400x400.jpg",
+                        "medium": "https://cdn.house.kg/house/images/5/7/9/5792d0c46dcff9bb7b7b0f6303b28303_640x480.jpg",
+                        "big": "https://cdn.house.kg/house/images/5/7/9/5792d0c46dcff9bb7b7b0f6303b28303_1200x900.jpg"
+                    },
+                    {
+                        "id": 4012564,
+                        "thumb": "https://cdn.house.kg/house/images/3/e/5/3e5e51d36727fe525dbae577120b378a_240x180.jpg",
+                        "square": "https://cdn.house.kg/house/images/3/e/5/3e5e51d36727fe525dbae577120b378a_400x400.jpg",
+                        "medium": "https://cdn.house.kg/house/images/3/e/5/3e5e51d36727fe525dbae577120b378a_640x480.jpg",
+                        "big": "https://cdn.house.kg/house/images/3/e/5/3e5e51d36727fe525dbae577120b378a_1200x900.jpg"
+                    },
+                    {
+                        "id": 4012565,
+                        "thumb": "https://cdn.house.kg/house/images/f/f/6/ff6277415b391d5965e31828d447a9ba_240x180.jpg",
+                        "square": "https://cdn.house.kg/house/images/f/f/6/ff6277415b391d5965e31828d447a9ba_400x400.jpg",
+                        "medium": "https://cdn.house.kg/house/images/f/f/6/ff6277415b391d5965e31828d447a9ba_640x480.jpg",
+                        "big": "https://cdn.house.kg/house/images/f/f/6/ff6277415b391d5965e31828d447a9ba_1200x900.jpg"
+                    },
+                    {
+                        "id": 4012566,
+                        "thumb": "https://cdn.house.kg/house/images/3/5/6/3562ff6e0c1abf190a25ca15277e972a_240x180.jpg",
+                        "square": "https://cdn.house.kg/house/images/3/5/6/3562ff6e0c1abf190a25ca15277e972a_400x400.jpg",
+                        "medium": "https://cdn.house.kg/house/images/3/5/6/3562ff6e0c1abf190a25ca15277e972a_640x480.jpg",
+                        "big": "https://cdn.house.kg/house/images/3/5/6/3562ff6e0c1abf190a25ca15277e972a_1200x900.jpg"
+                    },
+                    {
+                        "id": 4012567,
+                        "thumb": "https://cdn.house.kg/house/images/0/f/f/0ff570df91fe0bf97322b3b1c4fc162d_240x180.jpg",
+                        "square": "https://cdn.house.kg/house/images/0/f/f/0ff570df91fe0bf97322b3b1c4fc162d_400x400.jpg",
+                        "medium": "https://cdn.house.kg/house/images/0/f/f/0ff570df91fe0bf97322b3b1c4fc162d_640x480.jpg",
+                        "big": "https://cdn.house.kg/house/images/0/f/f/0ff570df91fe0bf97322b3b1c4fc162d_1200x900.jpg"
+                    },
+                    {
+                        "id": 4012568,
+                        "thumb": "https://cdn.house.kg/house/images/e/4/b/e4bbb13b83c7e1fdf9718287c82e8199_240x180.jpg",
+                        "square": "https://cdn.house.kg/house/images/e/4/b/e4bbb13b83c7e1fdf9718287c82e8199_400x400.jpg",
+                        "medium": "https://cdn.house.kg/house/images/e/4/b/e4bbb13b83c7e1fdf9718287c82e8199_640x480.jpg",
+                        "big": "https://cdn.house.kg/house/images/e/4/b/e4bbb13b83c7e1fdf9718287c82e8199_1200x900.jpg"
+                    },
+                    {
+                        "id": 4012569,
+                        "thumb": "https://cdn.house.kg/house/images/8/1/7/8176e28748b736cecc01fbf142ef6373_240x180.jpg",
+                        "square": "https://cdn.house.kg/house/images/8/1/7/8176e28748b736cecc01fbf142ef6373_400x400.jpg",
+                        "medium": "https://cdn.house.kg/house/images/8/1/7/8176e28748b736cecc01fbf142ef6373_640x480.jpg",
+                        "big": "https://cdn.house.kg/house/images/8/1/7/8176e28748b736cecc01fbf142ef6373_1200x900.jpg"
+                    },
+                    {
+                        "id": 4012570,
+                        "thumb": "https://cdn.house.kg/house/images/c/a/3/ca3cf5993ac9357893df8c5d4ac66eed_240x180.jpg",
+                        "square": "https://cdn.house.kg/house/images/c/a/3/ca3cf5993ac9357893df8c5d4ac66eed_400x400.jpg",
+                        "medium": "https://cdn.house.kg/house/images/c/a/3/ca3cf5993ac9357893df8c5d4ac66eed_640x480.jpg",
+                        "big": "https://cdn.house.kg/house/images/c/a/3/ca3cf5993ac9357893df8c5d4ac66eed_1200x900.jpg"
+                    },
+                    {
+                        "id": 4012571,
+                        "thumb": "https://cdn.house.kg/house/images/1/e/a/1eafb1b21451203ae5e63a0820b8f6a8_240x180.jpg",
+                        "square": "https://cdn.house.kg/house/images/1/e/a/1eafb1b21451203ae5e63a0820b8f6a8_400x400.jpg",
+                        "medium": "https://cdn.house.kg/house/images/1/e/a/1eafb1b21451203ae5e63a0820b8f6a8_640x480.jpg",
+                        "big": "https://cdn.house.kg/house/images/1/e/a/1eafb1b21451203ae5e63a0820b8f6a8_1200x900.jpg"
+                    },
+                    {
+                        "id": 4012572,
+                        "thumb": "https://cdn.house.kg/house/images/1/c/1/1c1ac2f301d8d16e9662bcf954b62038_240x180.jpg",
+                        "square": "https://cdn.house.kg/house/images/1/c/1/1c1ac2f301d8d16e9662bcf954b62038_400x400.jpg",
+                        "medium": "https://cdn.house.kg/house/images/1/c/1/1c1ac2f301d8d16e9662bcf954b62038_640x480.jpg",
+                        "big": "https://cdn.house.kg/house/images/1/c/1/1c1ac2f301d8d16e9662bcf954b62038_1200x900.jpg"
+                    },
+                    {
+                        "id": 4012573,
+                        "thumb": "https://cdn.house.kg/house/images/7/2/d/72dc44ef4d7bf18c0ea79b50927af4bc_240x180.jpg",
+                        "square": "https://cdn.house.kg/house/images/7/2/d/72dc44ef4d7bf18c0ea79b50927af4bc_400x400.jpg",
+                        "medium": "https://cdn.house.kg/house/images/7/2/d/72dc44ef4d7bf18c0ea79b50927af4bc_640x480.jpg",
+                        "big": "https://cdn.house.kg/house/images/7/2/d/72dc44ef4d7bf18c0ea79b50927af4bc_1200x900.jpg"
+                    },
+                    {
+                        "id": 4012575,
+                        "thumb": "https://cdn.house.kg/house/images/3/1/f/31f0098e65571a44feb2fabf51b2c339_240x180.jpg",
+                        "square": "https://cdn.house.kg/house/images/3/1/f/31f0098e65571a44feb2fabf51b2c339_400x400.jpg",
+                        "medium": "https://cdn.house.kg/house/images/3/1/f/31f0098e65571a44feb2fabf51b2c339_640x480.jpg",
+                        "big": "https://cdn.house.kg/house/images/3/1/f/31f0098e65571a44feb2fabf51b2c339_1200x900.jpg"
+                    },
+                    {
+                        "id": 4012576,
+                        "thumb": "https://cdn.house.kg/house/images/a/6/4/a645bac634c0634683fed0e560f21855_240x180.jpg",
+                        "square": "https://cdn.house.kg/house/images/a/6/4/a645bac634c0634683fed0e560f21855_400x400.jpg",
+                        "medium": "https://cdn.house.kg/house/images/a/6/4/a645bac634c0634683fed0e560f21855_640x480.jpg",
+                        "big": "https://cdn.house.kg/house/images/a/6/4/a645bac634c0634683fed0e560f21855_1200x900.jpg"
+                    },
+                    {
+                        "id": 4012577,
+                        "thumb": "https://cdn.house.kg/house/images/2/7/7/2772629860532009ff90301e51938d73_240x180.jpg",
+                        "square": "https://cdn.house.kg/house/images/2/7/7/2772629860532009ff90301e51938d73_400x400.jpg",
+                        "medium": "https://cdn.house.kg/house/images/2/7/7/2772629860532009ff90301e51938d73_640x480.jpg",
+                        "big": "https://cdn.house.kg/house/images/2/7/7/2772629860532009ff90301e51938d73_1200x900.jpg"
+                    },
+                    {
+                        "id": 4012578,
+                        "thumb": "https://cdn.house.kg/house/images/1/7/1/171c607801f84383a5cef2d57fca6596_240x180.jpg",
+                        "square": "https://cdn.house.kg/house/images/1/7/1/171c607801f84383a5cef2d57fca6596_400x400.jpg",
+                        "medium": "https://cdn.house.kg/house/images/1/7/1/171c607801f84383a5cef2d57fca6596_640x480.jpg",
+                        "big": "https://cdn.house.kg/house/images/1/7/1/171c607801f84383a5cef2d57fca6596_1200x900.jpg"
+                    },
+                    {
+                        "id": 4012579,
+                        "thumb": "https://cdn.house.kg/house/images/0/d/a/0daeed0c67296f2b3fe0d86ebef1b483_240x180.jpg",
+                        "square": "https://cdn.house.kg/house/images/0/d/a/0daeed0c67296f2b3fe0d86ebef1b483_400x400.jpg",
+                        "medium": "https://cdn.house.kg/house/images/0/d/a/0daeed0c67296f2b3fe0d86ebef1b483_640x480.jpg",
+                        "big": "https://cdn.house.kg/house/images/0/d/a/0daeed0c67296f2b3fe0d86ebef1b483_1200x900.jpg"
+                    },
+                    {
+                        "id": 4012580,
+                        "thumb": "https://cdn.house.kg/house/images/5/0/d/50de793098fb3abbe1393b16097b3c08_240x180.jpg",
+                        "square": "https://cdn.house.kg/house/images/5/0/d/50de793098fb3abbe1393b16097b3c08_400x400.jpg",
+                        "medium": "https://cdn.house.kg/house/images/5/0/d/50de793098fb3abbe1393b16097b3c08_640x480.jpg",
+                        "big": "https://cdn.house.kg/house/images/5/0/d/50de793098fb3abbe1393b16097b3c08_1200x900.jpg"
+                    },
+                    {
+                        "id": 4012581,
+                        "thumb": "https://cdn.house.kg/house/images/a/a/5/aa505209e2139951697a42f1600dac07_240x180.jpg",
+                        "square": "https://cdn.house.kg/house/images/a/a/5/aa505209e2139951697a42f1600dac07_400x400.jpg",
+                        "medium": "https://cdn.house.kg/house/images/a/a/5/aa505209e2139951697a42f1600dac07_640x480.jpg",
+                        "big": "https://cdn.house.kg/house/images/a/a/5/aa505209e2139951697a42f1600dac07_1200x900.jpg"
+                    },
+                    {
+                        "id": 4012582,
+                        "thumb": "https://cdn.house.kg/house/images/8/c/c/8ccf8831d28ca40e5ed11c6533ed1d66_240x180.jpg",
+                        "square": "https://cdn.house.kg/house/images/8/c/c/8ccf8831d28ca40e5ed11c6533ed1d66_400x400.jpg",
+                        "medium": "https://cdn.house.kg/house/images/8/c/c/8ccf8831d28ca40e5ed11c6533ed1d66_640x480.jpg",
+                        "big": "https://cdn.house.kg/house/images/8/c/c/8ccf8831d28ca40e5ed11c6533ed1d66_1200x900.jpg"
+                    },
+                    {
+                        "id": 4012583,
+                        "thumb": "https://cdn.house.kg/house/images/3/b/d/3bd6b84e4a66e405d37859ff46a8329f_240x180.jpg",
+                        "square": "https://cdn.house.kg/house/images/3/b/d/3bd6b84e4a66e405d37859ff46a8329f_400x400.jpg",
+                        "medium": "https://cdn.house.kg/house/images/3/b/d/3bd6b84e4a66e405d37859ff46a8329f_640x480.jpg",
+                        "big": "https://cdn.house.kg/house/images/3/b/d/3bd6b84e4a66e405d37859ff46a8329f_1200x900.jpg"
+                    },
+                    {
+                        "id": 4012584,
+                        "thumb": "https://cdn.house.kg/house/images/2/0/e/20ee7924c296a4feb6a4675cf81baacb_240x180.jpg",
+                        "square": "https://cdn.house.kg/house/images/2/0/e/20ee7924c296a4feb6a4675cf81baacb_400x400.jpg",
+                        "medium": "https://cdn.house.kg/house/images/2/0/e/20ee7924c296a4feb6a4675cf81baacb_640x480.jpg",
+                        "big": "https://cdn.house.kg/house/images/2/0/e/20ee7924c296a4feb6a4675cf81baacb_1200x900.jpg"
+                    },
+                    {
+                        "id": 4012585,
+                        "thumb": "https://cdn.house.kg/house/images/9/4/e/94e0aa88a8327c254cc4b15f32dccc85_240x180.jpg",
+                        "square": "https://cdn.house.kg/house/images/9/4/e/94e0aa88a8327c254cc4b15f32dccc85_400x400.jpg",
+                        "medium": "https://cdn.house.kg/house/images/9/4/e/94e0aa88a8327c254cc4b15f32dccc85_640x480.jpg",
+                        "big": "https://cdn.house.kg/house/images/9/4/e/94e0aa88a8327c254cc4b15f32dccc85_1200x900.jpg"
+                    },
+                    {
+                        "id": 4012603,
+                        "thumb": "https://cdn.house.kg/house/images/2/1/1/211039e4a9f9d22d171d21b5ee07adc4_240x180.jpg",
+                        "square": "https://cdn.house.kg/house/images/2/1/1/211039e4a9f9d22d171d21b5ee07adc4_400x400.jpg",
+                        "medium": "https://cdn.house.kg/house/images/2/1/1/211039e4a9f9d22d171d21b5ee07adc4_640x480.jpg",
+                        "big": "https://cdn.house.kg/house/images/2/1/1/211039e4a9f9d22d171d21b5ee07adc4_1200x900.jpg"
+                    }
+                ],
+                "slug": "6264749671ba6ea2b74f8-12772308",
+                "phones": [
+                    "996772603085"
+                ],
+                "all_phones": [
+                    "996772603085"
+                ],
+                "user_id": 593253,
+                "currency_id": 2,
+                "status": 1,
+                "prices": [
+                    {
+                        "id": 1,
+                        "price": 9537120,
+                        "m2_price": 101459
+                    },
+                    {
+                        "id": 2,
+                        "price": 111000,
+                        "m2_price": 1181
+                    }
+                ],
+                "counter": 1722,
+                "call_counter": 38,
+                "message_counter": 2,
+                "favourite_counter": 14,
+                "moderated": 1,
+                "comment_count": 0,
+                "featured": null,
+                "vipped_until": null,
+                "colored_until": "2024-11-02 16:24:56",
+                "autoup_until": null,
+                "urgent_until": "2024-11-02 16:24:56",
+                "is_vip": 0,
+                "is_premium": 1,
+                "premium_until": "2024-11-02 16:24:56",
+                "autoup_time": null,
+                "ad_color": null,
+                "ad_dark_color": null,
+                "premium_gradient": "#FACC00,#FFED9E",
+                "premium_dark_gradient": "#6C2E01,#CC5803",
+                "is_autoup": 0,
+                "is_urgent": 1,
+                "is_top": 0,
+                "topped_until": null,
+                "is_promo": 0,
+                "promo_until": null,
+                "video_url": null,
+                "video_thumbnail": null,
+                "installment": null,
+                "mortgage": null,
+                "owner_type": 2,
+                "building_id": null,
+                "rooms": 2,
+                "building_type": 1,
+                "parking_type": null,
+                "commercial_type": null,
+                "room_location": null,
+                "serie": 11,
+                "material": null,
+                "options": [
+                    0
+                ],
+                "year": 2014,
+                "floors": 11,
+                "floor": 11,
+                "square": 94,
+                "land_square": null,
+                "living_square": 60,
+                "kitchen_square": 15,
+                "address": "Суеркулова (бывш Донецкая)",
+                "house_number": "8/4",
+                "latitude": 42.8367,
+                "longitude": 74.6037,
+                "condition": 3,
+                "phone_info": 1,
+                "internet": 2,
+                "toilet": 1,
+                "canalization": null,
+                "water": null,
+                "electricity": null,
+                "heating": 1,
+                "gas": 3,
+                "balcony": 3,
+                "door": 3,
+                "parking": 1,
+                "furniture": 3,
+                "flooring": 3,
+                "document": [
+                    1,
+                    4
+                ],
+                "room_option": [
+                    0
+                ],
+                "ceiling_height": 3.2,
+                "safety": [
+                    6,
+                    7,
+                    8,
+                    2,
+                    5
+                ],
+                "description": "Продается 2 комнатная квартира в спальном районе со свежим ремонтом. Кирпичный дом, центральное отопление и центральная горячая вода. Теплые полы в санузлах и в прихожей. Трехфазовое электричество. 2 просторных двора. Самые лучшие виды на горы и город благодаря лоджиям по периметру и высокому этажу. Рядом больницы, школа #62 (через забор), другие школы, детсады. Цена ниже чем на другие квартиры в этом комплексе. Унитаз подвесной (инсталляция). Утепленные лоджии. Пятикамерные окна. Быстрый бесшумный лифт от Hyundai. На первом этаже магазин «Азия».",
+                "original_language": null,
+                "exchange": null,
+                "rental_term": null,
+                "flat_options": [
+                    1,
+                    4,
+                    7,
+                    9,
+                    10
+                ],
+                "district": 2,
+                "micro_district": 7,
+                "crossing": "Тыныстанова",
+                "irrigation": null,
+                "land_amenities": [
+                    0
+                ],
+                "land_options": [
+                    0
+                ],
+                "land_location": null,
+                "block_reason": null,
+                "delete_reason": null,
+                "review_notes": null,
+                "user_image": null,
+                "user_hash": "12acda650e58925f568065ec77786",
+                "user_name": "",
+                "user_ads_count": 0,
+                "price_type": 0,
+                "cadastre_number": "",
+                "cadastre_data": [],
+                "is_common_deal": 0,
+                "common_deal_until": null,
+                "is_hidden_deal": 0,
+                "type_id": 1,
+                "credit": {
+                    "id": 1,
+                    "image_url": "https://cdn.house.kg/house/images/demirbank-logo.png",
+                    "cta": "Купить в кредит",
+                    "price": "от 258 391 сом / мес.",
+                    "campaign": "demirbank-ipoteka"
+                },
+                "is_favourite": 0,
+                "unread_count": 0,
+                "user_last_activity": null,
+                "user_message_data": null
+            }
+        ],
+        "timestamp": "1730460266"
+    },
+    "status": 200
+}

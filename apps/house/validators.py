@@ -15,3 +15,4 @@ def validate_youtube_url(request_text):
         raise ValidationError(
             "Введите действительный YouTube URL"
         )
+

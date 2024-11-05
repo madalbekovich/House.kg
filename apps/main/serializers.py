@@ -51,10 +51,15 @@ class CommentListSerializer(serializers.ModelSerializer, mixins.HierarchicalMixi
 
     class Meta:
         model = models.Comments
-        fields = ['id', 'object_id', 'user', 'content', 'created_at', 'parent', 'subcomment']
+        fields = ['id', 'count_comment', 'object_id', 'user', 'content', 'created_at', 'parent', 'subcomment']
     
     def get_subcomment(self, instance):
         return super().base_method(instance)
     
     def get_created_at(self, obj):
         return timesince(obj.created_at)
+
+class ReviewSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = models.Review
+        fields = ['user', 'company', 'rating', 'comment']

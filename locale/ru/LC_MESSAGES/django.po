@@ -1,0 +1,776 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2024-10-26 17:52+0000\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=4; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && "
+"n%10<=4 && (n%100<12 || n%100>14) ? 1 : n%10==0 || (n%10>=5 && n%10<=9) || "
+"(n%100>=11 && n%100<=14)? 2 : 3);\n"
+#: apps/accounts/admin.py:22
+msgid "Главная"
+msgstr ""
+
+#: apps/accounts/admin.py:23
+msgid "Права доступы"
+msgstr ""
+
+#: apps/accounts/admin.py:26
+msgid "Важные даты"
+msgstr ""
+
+#: apps/accounts/apps.py:8
+msgid "Accounts"
+msgstr ""
+
+#: apps/accounts/models.py:26
+msgid "Email address"
+msgstr ""
+
+#: apps/accounts/models.py:32
+msgid "Phone"
+msgstr ""
+
+#: apps/accounts/models.py:40
+msgid "Name"
+msgstr ""
+
+#: apps/accounts/models.py:43
+msgid "Language"
+msgstr ""
+
+#: apps/accounts/models.py:57
+msgid "Avatar"
+msgstr ""
+
+#: apps/accounts/models.py:62
+msgid "active"
+msgstr ""
+
+#: apps/accounts/models.py:93 apps/accounts/models.py:100
+msgid "User"
+msgstr ""
+
+#: apps/accounts/models.py:94
+msgid "Users"
+msgstr ""
+
+#: apps/accounts/models.py:103
+msgid "Tariff plan"
+msgstr ""
+
+#: apps/accounts/models.py:106
+msgid "Deadline"
+msgstr ""
+
+#: apps/accounts/models.py:113
+msgid "Company Name"
+msgstr ""
+
+#: apps/accounts/models.py:118
+msgid "Description"
+msgstr ""
+
+#: apps/accounts/models.py:124
+msgid "Location"
+msgstr ""
+
+#: apps/accounts/models.py:129
+msgid "Website URL"
+msgstr ""
+
+#: apps/accounts/models.py:133
+msgid "Created At"
+msgstr ""
+
+#: apps/accounts/models.py:139
+msgid "Company Video"
+msgstr ""
+
+#: apps/accounts/models.py:144
+msgid "Business Account"
+msgstr ""
+
+#: apps/accounts/models.py:145
+msgid "Business Accounts"
+msgstr ""
+
+#: apps/accounts/models.py:150 apps/accounts/models.py:153
+msgid "Image"
+msgstr ""
+
+#: apps/accounts/models.py:154
+msgid "Images"
+msgstr ""
+
+#: apps/accounts/models.py:174
+msgid "Tariff name"
+msgstr ""
+
+#: apps/accounts/models.py:176
+msgid "Price"
+msgstr ""
+
+#: apps/accounts/models.py:179
+msgid "Duration in days"
+msgstr ""
+
+#: apps/accounts/models.py:182
+msgid "Limit"
+msgstr ""
+
+#: apps/accounts/models.py:185
+msgid "собственная брендированная страница"
+msgstr ""
+
+#: apps/accounts/models.py:186
+msgid "UP"
+msgstr ""
+
+#: apps/accounts/models.py:187
+msgid "размещение на главной странице сайта и в мобильных приложениях"
+msgstr ""
+
+#: apps/accounts/models.py:188
+msgid "метка на объявлениях с названием вашей компании"
+msgstr ""
+
+#: apps/accounts/models.py:189
+msgid "отсутствие рекламы среди фотографий объявления"
+msgstr ""
+
+#: apps/accounts/models.py:190
+msgid "отсутствие конкурентов под вашим объявлением"
+msgstr ""
+
+#: apps/accounts/models.py:191
+msgid "приоритет в разделе Автобизнес (выше планов Базовый и Продвинутый)"
+msgstr ""
+
+#: apps/accounts/models.py:192
+msgid "автоматическая загрузка объявлений с вашего сайта или CRM"
+msgstr ""
+
+#: apps/accounts/models.py:193
+msgid "поиск по вашим объявлениям"
+msgstr ""
+
+#: apps/accounts/models.py:194
+msgid "возможность отметить состояние кузова"
+msgstr ""
+
+#: apps/accounts/models.py:200
+msgid "Tariff Plan"
+msgstr ""
+
+#: apps/accounts/models.py:201
+msgid "Tariff Plans"
+msgstr ""
+
+#: apps/helpers/choices.py:5
+msgid "Доллар"
+msgstr ""
+
+#: apps/helpers/choices.py:6
+msgid "СОМ"
+msgstr ""
+
+#: apps/helpers/choices.py:10
+msgid "Кыргыз"
+msgstr ""
+
+#: apps/helpers/choices.py:11
+msgid "Русский"
+msgstr ""
+
+#: apps/helpers/choices.py:12 core/settings.py:107 core/settings.py:223
+msgid "English"
+msgstr ""
+
+#: apps/house/choices.py:216
+msgid "Пластиковые окна"
+msgstr ""
+
+#: apps/house/choices.py:217
+msgid "Улучшенная"
+msgstr ""
+
+#: apps/house/choices.py:218
+msgid "Кухня-студия"
+msgstr ""
+
+#: apps/house/choices.py:219
+msgid "Новая сантехника"
+msgstr ""
+
+#: apps/house/choices.py:220
+msgid "Кондиционер"
+msgstr ""
+
+#: apps/house/choices.py:221
+msgid "Комнаты изолированы"
+msgstr ""
+
+#: apps/house/choices.py:222
+msgid "Встроенная кухня"
+msgstr ""
+
+#: apps/house/choices.py:223
+msgid "Кладовка"
+msgstr ""
+
+#: apps/house/choices.py:224
+msgid "Тихий двор"
+msgstr ""
+
+#: apps/house/choices.py:225
+msgid "Удобно под бизнес"
+msgstr ""
+
+#: apps/house/choices.py:229
+msgid "Решетки на окнах"
+msgstr ""
+
+#: apps/house/choices.py:230
+msgid "Сигнализация"
+msgstr ""
+
+#: apps/house/choices.py:231
+msgid "Домофон"
+msgstr ""
+
+#: apps/house/choices.py:232
+msgid "Видеодомофон"
+msgstr ""
+
+#: apps/house/choices.py:233
+msgid "Кодовый замок"
+msgstr ""
+
+#: apps/house/choices.py:234
+msgid "Видеонаблюдение"
+msgstr ""
+
+#: apps/house/choices.py:235
+msgid "Консьерж"
+msgstr ""
+
+#: apps/house/choices.py:239
+msgid "договор купли-продажи"
+msgstr ""
+
+#: apps/house/choices.py:240
+msgid "договор дарения"
+msgstr ""
+
+#: apps/house/choices.py:241
+msgid "договор долевого участия"
+msgstr ""
+
+#: apps/house/choices.py:242
+msgid "технический паспорт"
+msgstr ""
+
+#: apps/house/choices.py:243
+msgid "акт ввода в эксплуатацию"
+msgstr ""
+
+#: apps/house/choices.py:244
+msgid "красная книга"
+msgstr ""
+
+#: apps/house/choices.py:245
+msgid "зеленая книга"
+msgstr ""
+
+#: apps/house/choices.py:246
+msgid "свидетельство о праве на наследство"
+msgstr ""
+
+#: apps/house/data_models.py:12
+msgid "Тип"
+msgstr ""
+
+#: apps/house/data_models.py:13
+msgid "Типы"
+msgstr ""
+
+#: apps/house/data_models.py:21
+msgid "Категория"
+msgstr ""
+
+#: apps/house/data_models.py:22
+msgid "Категории"
+msgstr ""
+
+#: apps/house/data_models.py:30
+msgid "Тип аккаунта"
+msgstr ""
+
+#: apps/house/data_models.py:31
+msgid "Типы аккаунтов"
+msgstr ""
+
+#: apps/house/data_models.py:39 apps/house/models.py:162
+msgid "Этаж"
+msgstr ""
+
+#: apps/house/data_models.py:40
+msgid "Этажи"
+msgstr ""
+
+#: apps/house/data_models.py:48 apps/house/models.py:136
+msgid "Серия"
+msgstr ""
+
+#: apps/house/data_models.py:49
+msgid "Серии"
+msgstr ""
+
+#: apps/house/data_models.py:57
+msgid "Материал"
+msgstr ""
+
+#: apps/house/data_models.py:58
+msgid "Материалы"
+msgstr ""
+
+#: apps/house/data_models.py:66
+msgid "Здание"
+msgstr ""
+
+#: apps/house/data_models.py:67
+msgid "Здания"
+msgstr ""
+
+#: apps/house/data_models.py:75
+msgid "Опция"
+msgstr ""
+
+#: apps/house/data_models.py:76
+msgid "Опции"
+msgstr ""
+
+#: apps/house/data_models.py:84
+msgid "Комната"
+msgstr ""
+
+#: apps/house/data_models.py:85
+msgid "Комнаты"
+msgstr ""
+
+#: apps/house/data_models.py:93 apps/house/models.py:206
+msgid "Состояние"
+msgstr ""
+
+#: apps/house/data_models.py:94
+msgid "Состояния"
+msgstr ""
+
+#: apps/house/data_models.py:102
+msgid "Документ"
+msgstr ""
+
+#: apps/house/data_models.py:103
+msgid "Документы"
+msgstr ""
+
+#: apps/house/data_models.py:111
+msgid "Телефон"
+msgstr ""
+
+#: apps/house/data_models.py:112
+msgid "Телефоны"
+msgstr ""
+
+#: apps/house/data_models.py:120
+msgid "Интернет"
+msgstr ""
+
+#: apps/house/data_models.py:121
+msgid "Интернеты"
+msgstr ""
+
+#: apps/house/data_models.py:129
+msgid "Туалет"
+msgstr ""
+
+#: apps/house/data_models.py:130
+msgid "Туалеты"
+msgstr ""
+
+#: apps/house/data_models.py:138
+msgid "Канализация"
+msgstr ""
+
+#: apps/house/data_models.py:139
+msgid "Канализации"
+msgstr ""
+
+#: apps/house/data_models.py:147
+msgid "Вода"
+msgstr ""
+
+#: apps/house/data_models.py:148
+msgid "Воды"
+msgstr ""
+
+#: apps/house/data_models.py:156
+msgid "Электричество"
+msgstr ""
+
+#: apps/house/data_models.py:157
+msgid "Электричества"
+msgstr ""
+
+#: apps/house/data_models.py:165
+msgid "Отопление"
+msgstr ""
+
+#: apps/house/data_models.py:166
+msgid "Отопления"
+msgstr ""
+
+#: apps/house/data_models.py:174
+msgid "Газ"
+msgstr ""
+
+#: apps/house/data_models.py:175
+msgid "Газы"
+msgstr ""
+
+#: apps/house/data_models.py:183
+msgid "Балкон"
+msgstr ""
+
+#: apps/house/data_models.py:184
+msgid "Балконы"
+msgstr ""
+
+#: apps/house/data_models.py:192
+msgid "Дверь"
+msgstr ""
+
+#: apps/house/data_models.py:193
+msgid "Двери"
+msgstr ""
+
+#: apps/house/data_models.py:201
+msgid "Парковка"
+msgstr ""
+
+#: apps/house/data_models.py:202
+msgid "Парковки"
+msgstr ""
+
+#: apps/house/data_models.py:210
+msgid "Безопасность"
+msgstr ""
+
+#: apps/house/data_models.py:211
+msgid "Безопасности"
+msgstr ""
+
+#: apps/house/data_models.py:222
+msgid "Мебель"
+msgstr ""
+
+#: apps/house/data_models.py:223
+msgid "Мебели"
+msgstr ""
+
+#: apps/house/data_models.py:231
+msgid "Напольное покрытие"
+msgstr ""
+
+#: apps/house/data_models.py:232
+msgid "Напольные покрытия"
+msgstr ""
+
+#: apps/house/data_models.py:240
+msgid "Обмен"
+msgstr ""
+
+#: apps/house/data_models.py:241
+msgid "Обмены"
+msgstr ""
+
+#: apps/house/data_models.py:249
+msgid "Срок аренды"
+msgstr ""
+
+#: apps/house/data_models.py:250
+msgid "Сроки аренды"
+msgstr ""
+
+#: apps/house/data_models.py:258
+msgid "Поливная вода"
+msgstr ""
+
+#: apps/house/data_models.py:259
+msgid "Поливные воды"
+msgstr ""
+
+#: apps/house/data_models.py:267
+msgid "Коммуникация"
+msgstr ""
+
+#: apps/house/data_models.py:268
+msgid "Коммуникации"
+msgstr ""
+
+#: apps/house/data_models.py:276
+msgid "Расположение участка"
+msgstr ""
+
+#: apps/house/data_models.py:277
+msgid "Расположения участков"
+msgstr ""
+
+#: apps/house/data_models.py:285
+msgid "Опция участка"
+msgstr ""
+
+#: apps/house/data_models.py:286
+msgid "Опции участков"
+msgstr ""
+
+#: apps/house/data_models.py:294
+msgid "Класс здания"
+msgstr ""
+
+#: apps/house/data_models.py:295
+msgid "Классы зданий"
+msgstr ""
+
+#: apps/house/data_models.py:303
+msgid "Состояние здания"
+msgstr ""
+
+#: apps/house/data_models.py:304
+msgid "Состояния зданий"
+msgstr ""
+
+#: apps/house/data_models.py:312
+msgid "Отделка"
+msgstr ""
+
+#: apps/house/data_models.py:313
+msgid "Отделки"
+msgstr ""
+
+#: apps/house/data_models.py:321
+msgid "Тип парковки"
+msgstr ""
+
+#: apps/house/data_models.py:322
+msgid "Типы парковок"
+msgstr ""
+
+#: apps/house/data_models.py:330
+msgid "Тип коммерческого объекта"
+msgstr ""
+
+#: apps/house/data_models.py:331
+msgid "Типы коммерческих объектов"
+msgstr ""
+
+#: apps/house/data_models.py:339
+msgid "Расположение комнаты"
+msgstr ""
+
+#: apps/house/data_models.py:340
+msgid "Расположения комнат"
+msgstr ""
+
+#: apps/house/data_models.py:348
+msgid "Опция комнаты"
+msgstr ""
+
+#: apps/house/data_models.py:349
+msgid "Опции комнат"
+msgstr ""
+
+#: apps/house/models.py:21 apps/house/models.py:255
+msgid "Цена"
+msgstr ""
+
+#: apps/house/models.py:30
+msgid "Состояние обьекта"
+msgstr ""
+
+#: apps/house/models.py:31 apps/house/models.py:188
+msgid "Высота потолков"
+msgstr ""
+
+#: apps/house/models.py:32 apps/house/models.py:199
+msgid "Тип отопления"
+msgstr ""
+
+#: apps/house/models.py:33 apps/house/models.py:148
+msgid "Тип строения"
+msgstr ""
+
+#: apps/house/models.py:34
+msgid "Этажность"
+msgstr ""
+
+#: apps/house/models.py:35
+msgid "Тип класса"
+msgstr ""
+
+#: apps/house/models.py:36
+msgid "Об объекте"
+msgstr ""
+
+#: apps/house/models.py:57 apps/house/models.py:58
+msgid "Жилой комплекс"
+msgstr ""
+
+#: apps/house/models.py:103 apps/house/models.py:104
+msgid "Городы"
+msgstr ""
+
+#: apps/house/models.py:115
+msgid "Пользователь"
+msgstr ""
+
+#: apps/house/models.py:119
+msgid "Тип сделки"
+msgstr ""
+
+#: apps/house/models.py:124
+msgid "Тип недвижимости"
+msgstr ""
+
+#: apps/house/models.py:129
+msgid "Количество комнат"
+msgstr ""
+
+#: apps/house/models.py:155
+msgid "Год построения"
+msgstr ""
+
+#: apps/house/models.py:167
+msgid "из всего этажей"
+msgstr ""
+
+#: apps/house/models.py:172
+msgid "общая"
+msgstr ""
+
+#: apps/house/models.py:176
+msgid "жилая"
+msgstr ""
+
+#: apps/house/models.py:182
+msgid "кухня"
+msgstr ""
+
+#: apps/house/models.py:213
+msgid "Код ЕНИ"
+msgstr ""
+
+#: apps/house/models.py:220
+msgid "Расположение"
+msgstr ""
+
+#: apps/house/models.py:225
+msgid "Улица"
+msgstr ""
+
+#: apps/house/models.py:231
+msgid "№ дома"
+msgstr ""
+
+#: apps/house/models.py:237
+msgid "Пересечение с"
+msgstr ""
+
+#: apps/house/models.py:244
+msgid "Ссылка на видео"
+msgstr ""
+
+#: apps/house/models.py:252
+msgid "Описание"
+msgstr ""
+
+#: apps/house/models.py:260
+msgid "Цена за"
+msgstr ""
+
+#: apps/house/models.py:265
+msgid "Возможность рассрочки"
+msgstr ""
+
+#: apps/house/models.py:272
+msgid "Возможность ипотеки"
+msgstr ""
+
+#: apps/house/models.py:279
+msgid "Возможность обмена"
+msgstr ""
+
+#: apps/house/models.py:286
+msgid "От чьего имени подается объявление"
+msgstr ""
+
+#: apps/house/models.py:372
+msgid "Второй Номер телефона пользователя"
+msgstr ""
+
+#: apps/house/models.py:381
+msgid "Активный пост"
+msgstr ""
+
+#: apps/house/models.py:395
+msgid "Разное"
+msgstr ""
+
+#: apps/house/models.py:400
+msgid "Правоустанавливающие документы"
+msgstr ""
+
+#: apps/house/models.py:406
+msgid "КОмпания"
+msgstr ""
+
+#: apps/house/models.py:414
+msgid "Название комплекса"
+msgstr ""
+
+#: apps/house/models.py:422 apps/house/models.py:423
+msgid "Недвижимость"
+msgstr ""
+
+#: apps/house/models.py:442
+msgid "Фотография"
+msgstr ""
+
+#: apps/house/models.py:443
+msgid "Фотографии"
+msgstr ""
+
+#: apps/house/validators.py:8
+msgid "The cadastral number must consist of exactly 14 digits. ***"
+msgstr ""
+
+#: core/settings.py:108 core/settings.py:224
+msgid "Russian"
+msgstr ""
+
+#: core/settings.py:109 core/settings.py:225
+msgid "Kyrgyz"
+msgstr ""

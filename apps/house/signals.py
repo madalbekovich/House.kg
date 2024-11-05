@@ -12,7 +12,7 @@ from PIL import Image
 
 @receiver(post_save, sender=models.Pictures)
 def add_watermark(sender, instance, created, **kwargs):
-    if created:
+    if created and instance.pictures and instance.pictures.path:
         with Image.open(instance.pictures.path) as pictures:
             watermark = Image.open(settings.WATERMARK_PATH).convert('RGBA')
             pictures_width, pictures_height = pictures.size

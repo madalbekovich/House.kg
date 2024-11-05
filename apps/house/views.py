@@ -5,15 +5,21 @@ from rest_framework.decorators import action
 from rest_framework.response import Response
 from rest_framework import status
 from django_filters.rest_framework import DjangoFilterBackend
-
+from rest_framework.views import APIView
+from django.utils import translation
+from apps.house import exceptions
 # your import 
 from apps.house import models
 from apps.house import serializers
+from apps.house import data_serializers
+from apps.house import data_models
 from apps.house import filters
 from apps.helpers import pagination
 from apps.helpers.permission import IsAdmin
 from apps.house import mixins
+from apps.house import choices
 from apps.house.tasks import delete_post
+# from apps.house import exceptions
 
 
 class ComplexView(viewsets.GenericViewSet):
@@ -33,34 +39,17 @@ class ComplexView(viewsets.GenericViewSet):
         instance = self.get_queryset()
         serializer = self.get_serializer(instance, many=True)
         return Response(serializer.data, status=status.HTTP_200_OK)
-
-class CitiesView(viewsets.GenericViewSet):
-    queryset = models.Location.objects.all()
-    serializer_class = serializers.RegionsSerializer
     
-    @action(detail=False, methods=['get'], url_path='cities')
-    def cities(self, request, *args, **kwargs):
-        """
-        town - get detailed information about the region and including its cities
-        detail - get detailed information about the region
-        """
-        city = request.query_params.get('town')
-        all_id = request.query_params.get('detail')
-        
-        if all_id:
-            general_location_query = get_object_or_404(models.Location, id=all_id)
-            serializer = self.get_serializer(general_location_query, context={'empty_㋡: True'})
-            return Response(serializer.data, status=status.HTTP_200_OK)
-        
-        region = models.Location.objects.filter(parent=None) if not city else \
-            get_object_or_404(models.Location, id=city).get_children()
-        serializer = self.get_serializer(region, many=True, context={"empty_㋡": True})  
-        return Response(serializer.data, status=status.HTTP_200_OK)
+    @action(detail=False, methods=['post'])
+    def add_complex(self, request, *args, **kwargs):
+        serializer = self.get_serializer(data=request.data)
+        if serializer.is_valid():
+            serializer.save(user=request.user)
+            return Response({"message": "complex succes created!"}, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
     
 class PropertyView(viewsets.GenericViewSet, mixins.ViewsMixin):
-    queryset = models.Property.objects.select_related(
-        'location' ,'documents', 'miscellaneous', 'complex_name').all().order_by('-id')
-    # TODO: Prefretch to images
+    queryset = models.Property.objects.prefetch_related('land_amenities', 'options', 'safety', 'land_options', 'room_options', 'flat_options').all().order_by('-id')
     serializer_class = serializers.AddPropertySerializer
     filter_backends = [DjangoFilterBackend, ]
     filterset_class = filters.PropertyFilter
@@ -78,21 +67,14 @@ class PropertyView(viewsets.GenericViewSet, mixins.ViewsMixin):
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
         
-    @action(detail=False, methods=['get'], url_path='list')
+    @action(detail=False, methods=['get'], url_path='ads')
     def lists(self, request, *args, **kwargs):
         queryset = self.filter_queryset(self.get_queryset())
-        print(queryset)
         paginator = pagination.PropertyResultsPagination()
         paginated_queryset = paginator.paginate_queryset(queryset, request)
-        serializer = serializers.PropertyListSerializer(paginated_queryset, many=True)
+        serializer = serializers.PropertySerializer(paginated_queryset, many=True)
         return paginator.get_paginated_response(serializer.data)
-    
-    @action(detail=True, methods=['get'], url_path='details')
-    def details(self, request, *args, **kwargs):
-        instance = self.get_object()
-        self.get_views(instance=instance)
-        seralizer = serializers.PropertyDetailSerializer(instance)
-        return Response(seralizer.data)
+
     
     @action(detail=True, methods=['get'], url_path=None)
     def post_control(self, request, *args, **kwargs):
@@ -117,3 +99,132 @@ class PropertyView(viewsets.GenericViewSet, mixins.ViewsMixin):
             serializer.save()
             return Response(serializer.data, status=status.HTTP_200_OK)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+class DataView(APIView):
+    def get(self, request):
+        data = {
+            'type': data_models.Type.objects.all(),
+            'category': data_models.Category.objects.all(),
+            'rooms': data_models.Rooms.objects.all(),
+            'material': data_models.Material.objects.all(),
+            'floors': data_models.Floor.objects.all(),
+            'condition': data_models.Condition.objects.all(),
+            'owner_type': data_models.AccountType.objects.all(),
+            'heating': data_models.Heating.objects.all(),
+            'region': data_models.Region.objects.all(),
+            'irrigation': data_models.Irrigation.objects.all(),
+            'land_options': data_models.LandOptions.objects.all(),
+            'land_location': data_models.LandLocation.objects.all(),
+            'rental_term': data_models.RentalTerm.objects.all(),
+            'land_amenities': data_models.LandAmenities.objects.all(),
+            'room_option': data_models.RoomOption.objects.all(),
+            'water': data_models.Water.objects.all(),
+            'electricity': data_models.Electricity.objects.all(),
+            'options': data_models.Options.objects.all(),
+            'finishing': data_models.Finishing.objects.all(),
+            'canalization': data_models.Canalization.objects.all(),
+            'comment_allowed': data_models.CommentAllowed.objects.all(),
+            'parking_type': data_models.ParkingType.objects.values('id', 'translations__name'),
+            'commercial_type': data_models.CommercialType.objects.values('id', 'translations__name'),
+            'town': data_models.Town.objects.all(),
+            'phone_info': data_models.Phone.objects.all(),
+            'internet': data_models.Internet.objects.all(),
+            'toilet': data_models.Toilet.objects.all(),
+            'gas': data_models.Gas.objects.all(),
+            'balcony': data_models.Balcony.objects.all(),
+            'door': data_models.Door.objects.all(),
+            'parking': data_models.Parking.objects.all(),
+            'furniture': data_models.Furniture.objects.all(),
+            'flooring': data_models.Flooring.objects.all(),
+            'safety': data_models.Safety.objects.all(),
+            'flat_options': data_models.FlatOptions.objects.all(),
+            'exchange': data_models.Exchange.objects.all(),
+            'price_type': data_models.PriceType.objects.all(),
+            'currency': data_models.Currency.objects.all(),
+            'possibility': data_models.Possibility.objects.all(),
+            'document': data_models.Document.objects.all(),
+            'district': data_models.District.objects.all(),
+        }
+        
+        serializer = data_serializers.CombinedSerializer(data)
+        return Response(serializer.data)
+    
+class PropertyParam(APIView):
+    def get(self, request):
+        if request.query_params.get('show_fields') == 'true':
+            return self.show_fields(request)
+
+        validation_result = self.validate_params(request)
+        
+        if 'error' in validation_result:
+            return Response(validation_result, status=status.HTTP_400_BAD_REQUEST)
+        
+        return Response({"success": "Все параметры валидны"}, status=status.HTTP_200_OK)
+
+    def validate_params(self, request):
+        type_deal = request.query_params.get('type_deal')
+        type_property = request.query_params.get('type_property')
+        region_id = request.query_params.get('region_id')  
+        town_id = request.query_params.get('town_id')
+        
+        rules = exceptions.get_validation_rules(region_id, town_id).get(type_deal, {}).get(type_property)
+
+        if not rules:
+            return {"error": "Invalid type_deal or type_property"}
+
+        missing_fields = []
+        invalid_fields = []
+
+        for rule in rules:
+            field_name = rule['name']
+            required = rule.get('required', False)
+            value = request.query_params.get(field_name)
+
+            if required and not value :
+                missing_fields.append(field_name)
+
+        available_fields = [
+            {
+                "name": rule['name'],
+                "type": rule['type'],
+                "required": rule['required'],
+                "data": rule.get('data', []),
+            }
+            for rule in rules
+        ]
+
+        response = {}
+        if missing_fields:
+            response.update({
+                "error": "Missing required fields",
+                "missing_fields": missing_fields,
+            })
+        if invalid_fields:
+            response.update({
+                "error": "Invalid fields",
+                "invalid_fields": invalid_fields,
+            })
+
+        response["available_fields"] = available_fields
+        return response if response else {"success": "All fields are valid"}
+
+    def show_fields(self, request):
+        type_deal = request.query_params.get('type_deal')
+        type_property = request.query_params.get('type_property')
+
+        rules = exceptions.VALIDATION_RULES.get(type_deal, {}).get(type_property)
+        
+        if not rules:
+            return Response({"error": "Invalid type_deal or type_property"}, status=status.HTTP_400_BAD_REQUEST)
+
+        fields_info = []
+        for rule in rules:
+            field_info = {
+                "name": rule['name'],
+                "type": rule['type']
+            }
+            if 'choices' in rule:
+                field_info['choices'] = rule['choices']
+            fields_info.append(field_info)
+        
+        return Response({"fields": fields_info}, status=status.HTTP_200_OK)

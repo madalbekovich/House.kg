@@ -1,5 +1,6 @@
 from pathlib import Path
-
+from django.utils.translation import gettext_lazy as _
+import os
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 SECRET_KEY = 'django-insecure-__2!jo#7n92v7o=2mk_&z-js#e59co)of*y+*p2&5g-685e9tp'
@@ -27,17 +28,18 @@ INSTALLED_APPS = [
     'corsheaders',
     'rest_framework',
     'rest_framework_gis',
-    'django_filters',
+    'django_filters',   
     'versatileimagefield',
     'leaflet',
     'django_admin_geomap',
+    'parler',
+    'sorl.thumbnail',
     
     # apps
     'apps.house',
     'apps.accounts',
     'apps.main',
-    'apps.helpers.api',
-    'sorl.thumbnail'
+    'apps.tariffs'
     
 ]
 
@@ -50,6 +52,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'apps.house.middleware.LocaleHeaderMiddleware',  
 ]
 
 ROOT_URLCONF = 'core.urls'
@@ -81,6 +84,7 @@ DATABASES = {
         'PASSWORD': 'bpsyx@MN51',
         'HOST': 'localhost',
         'PORT': '',
+        
     }
 }
 
@@ -100,6 +104,15 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
+LANGUAGES = [
+    ('en', _('English')),
+    ('ru', _('Russian')),
+    ('kg', _('Kyrgyz')),
+]
+
+LOCALE_PATHS = [
+    BASE_DIR / 'locale',
+]
 
 LANGUAGE_CODE = 'ru'
 
@@ -113,9 +126,13 @@ STATIC_URL = 'static/'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-MEDIA_URL = '/media/'
+DOMAIN_NAME = 'https://c6c9-46-251-211-28.ngrok-free.app'
+if DEBUG:
+    MEDIA_URL = '/media/' 
+else:
+    MEDIA_URL = f'{DOMAIN_NAME}/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
-MEDIA_ROOT = BASE_DIR / "media"
 
                     ### DRF SETTINGS ###
                     
@@ -139,13 +156,19 @@ SPECTACULAR_SETTINGS = {
     'TITLE': 'Bussines.kg',
     'DESCRIPTION': 'DESCRIPTION....',
     'VERSION': '1.0.0',
-    'SERVE_INCLUDE_SCHEMA': False,
+    'COMPONENT_SPLIT_REQUEST': True,
+    # 'APPEND_COMPONENTS': {
+    #     'FilterBackend': 'drf_spectacular.contrib.django_filter.DjangoFilterBackend',
+    # },
 }
 CORS_ALLOWED_ORIGINS = [
     "http://localhost:3000",
     "http://localhost:3001",
     "http://localhost:3002",
     "http://localhost:3003",
+]
+CSRF_TRUSTED_ORIGINS = [
+    "https://c6c9-46-251-211-28.ngrok-free.app",
 ]
 CORS_ALLOW_METHODS = (
     "DELETE",
@@ -166,36 +189,52 @@ EMAIL_HOST_PASSWORD = "fozk fuet adlf jqvd"
 
 CELERY_BROKER_URL = "redis://localhost:6379/0"
 
+                    ### LOGGER REQUEST ###            
 
-                    ### LOGGER REQUEST ###
-                    
-
-# LOGGING = {
-#     'version': 1,
-#     'handlers': {
-#         'console': {"class": 'logging.StreamHandler'}
-#     },
-#     'loggers': {
-#         'django.db.backends': {
-#             'handlers': ['console'],
-#             'level': 'DEBUG',
-#         }
-#     }
-# }
+LOGGING = {
+    'version': 1,
+    'handlers': {
+        'console': {"class": 'logging.StreamHandler'},
+    },
+    'formatters': {
+    'verbose': {
+        'format': '%(levelname)s %(asctime)s %(module)s: %(message)s'
+        },
+    },
+    'loggers': {
+        'django.db.backends': {
+            'handlers': ['console'],
+            'level': 'DEBUG',
+        }
+    }
+}
 
                     ### WATERMARK CONFIG###
                     
-WATERMARK_PATH = 'media/watermark_logo/logo-1.png'
+WATERMARK_PATH = os.path.join('media/watermark_logo/logo-2.png')
 
 GMAIL_TEMPLATE_ADD = '/home/madalbekovich/MProjects/House.kg/core/apps/helpers/send_mail_house.html'
 
+# TRANS
 
+PARLER_DEFAULT_LANGUAGE_CODE = 'ru'
 
+LANGUAGE_CODE = 'ru'
 
-# HASHED_CODE
+LANGUAGES = (
+    ('en', _("English")),
+    ('ru', _("Russian")),
+    ('kg', _('Kyrgyz')),
+)
 
-HASHID_FIELD_MIN_LENGTH = 25
-
-HASHID_FIELD_LOOKUP_EXCEPTION = False
-
-HASHID_FIELD_SALT = 'EF92B778BAFE771E89245B89ECBC08A44A4E166C06659911881F383D4473E94F'
+PARLER_LANGUAGES = {
+    None: (
+        {'code': 'en',},
+        {'code': 'ru',},
+        {'code': 'kg',},
+    ),
+    'default': {
+        'fallback': 'ru',
+        'hide_untranslated': False,
+    }
+}
