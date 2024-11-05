@@ -36,6 +36,7 @@ INSTALLED_APPS = [
     'sorl.thumbnail',
     
     # apps
+    'admin_extra_buttons',
     'apps.house',
     'apps.accounts',
     'apps.main',
@@ -191,23 +192,23 @@ CELERY_BROKER_URL = "redis://localhost:6379/0"
 
                     ### LOGGER REQUEST ###            
 
-LOGGING = {
-    'version': 1,
-    'handlers': {
-        'console': {"class": 'logging.StreamHandler'},
-    },
-    'formatters': {
-    'verbose': {
-        'format': '%(levelname)s %(asctime)s %(module)s: %(message)s'
-        },
-    },
-    'loggers': {
-        'django.db.backends': {
-            'handlers': ['console'],
-            'level': 'DEBUG',
-        }
-    }
-}
+# LOGGING = {
+#     'version': 1,
+#     'handlers': {
+#         'console': {"class": 'logging.StreamHandler'},
+#     },
+#     'formatters': {
+#     'verbose': {
+#         'format': '%(levelname)s %(asctime)s %(module)s: %(message)s'
+#         },
+#     },
+#     'loggers': {
+#         'django.db.backends': {
+#             'handlers': ['console'],
+#             'level': 'DEBUG',
+#         }
+#     }
+# }
 
                     ### WATERMARK CONFIG###
                     

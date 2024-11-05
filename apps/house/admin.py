@@ -6,7 +6,10 @@ from django.contrib import admin
 from mptt.admin import MPTTModelAdmin
 from django.utils.safestring import mark_safe
 from parler.admin import TranslatableAdmin
+from admin_extra_buttons.api import ExtraButtonsMixin, button, confirm_action, link, view
 from apps.house import data_models
+from django.http import HttpResponseRedirect
+from apps.house import tasks
 
 class ComplexPicteresInline(admin.TabularInline):
     '''Tabular Inline View for Property '''
@@ -37,7 +40,7 @@ class PicteresInline(admin.TabularInline):
     extra = 1
     
 @admin.register(models.Property)
-class Property(admin.ModelAdmin):
+class Property(ExtraButtonsMixin, admin.ModelAdmin):
     list_display = ['id', 'active_post']
     search_fields = ['user__username']
     inlines = [PicteresInline,  ]
@@ -63,3 +66,28 @@ class Property(admin.ModelAdmin):
                 form.base_fields.pop('parking_type', None)
                 
         return form
+    
+    @button(
+        change_form=True,
+        html_attrs={
+        'style': '''
+            background-color: rgb(184,0,16);
+            color: white;
+            padding: 0.563rem 2.75rem;
+            border-radius: 0.25rem;
+            border: none;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+        ''',
+        'onmouseover': 'this.style.backgroundColor="rgb(19,150,19)"',
+        'onmouseout': 'this.style.backgroundColor="rgb(38, 80, 89)"',
+        'onmousedown': 'this.style.transform="scale(0.95)"',
+        'onmouseup': 'this.style.transform="scale(1)"',
+        }
+    )
+    def Выгрузка_house_kg(self, request):
+        tasks.load_properties.delay()
+        self.message_user(request, "Булуттан чыккан айга окшоп загрузка кетти!.")
+        return HttpResponseRedirect(request.META.get('HTTP_REFERER', '/'))
+    
