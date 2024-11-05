@@ -468,5 +468,5 @@ def load_properties():
                 
                 
     except Exception as e:
-        traceback.print_exc() 
+        # traceback.print_exc() 
         print(f'Братан что то упустил: \n {e}')
