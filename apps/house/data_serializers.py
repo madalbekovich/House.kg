@@ -1,6 +1,5 @@
 from apps.house import data_models
 from rest_framework import serializers
-from parler_rest.serializers import TranslatableModelSerializer
 
 
 class RoomsSerializer(serializers.ModelSerializer):

@@ -3,7 +3,7 @@ from rest_framework import routers
 from apps.house import views
 
 router = routers.SimpleRouter()
-router.register(r'', views.PropertyView)
+router.register(r'ads', views.PropertyView)
 router.register(r'', views.ComplexView)
 
 urlpatterns = [

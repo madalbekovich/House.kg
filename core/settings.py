@@ -131,12 +131,13 @@ STATIC_ROOT = os.path.join(
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-DOMAIN_NAME = 'https://c6c9-46-251-211-28.ngrok-free.app'
+DOMAIN_NAME = '80.90.185.91'
 
 if DEBUG:
-    MEDIA_URL = '/media/' 
+    MEDIA_URL = f'http://{DOMAIN_NAME}/media/'
 else:
-    MEDIA_URL = f'{DOMAIN_NAME}/media/'
+    MEDIA_URL = f'http://{DOMAIN_NAME}/media/'
+    
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 
@@ -148,14 +149,12 @@ REST_FRAMEWORK = {
         "rest_framework.authentication.TokenAuthentication",
         "rest_framework.authentication.BasicAuthentication",
     ],
-    'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
-    'PAGE_SIZE': 10,  
-    
+    'DEFAULT_FILTER_BACKENDS': ['django_filters.rest_framework.DjangoFilterBackend'],
     'DEFAULT_SCHEMA_CLASS': 'drf_spectacular.openapi.AutoSchema',
-
+    'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
     'DEFAULT_RENDERER_CLASSES': (
             'rest_framework.renderers.JSONRenderer',
-        ),
+    ),
 }
 
 SPECTACULAR_SETTINGS = {
@@ -163,10 +162,8 @@ SPECTACULAR_SETTINGS = {
     'DESCRIPTION': 'DESCRIPTION....',
     'VERSION': '1.0.0',
     'COMPONENT_SPLIT_REQUEST': True,
-    # 'APPEND_COMPONENTS': {
-    #     'FilterBackend': 'drf_spectacular.contrib.django_filter.DjangoFilterBackend',
-    # },
 }
+
 CORS_ALLOWED_ORIGINS = [
     "http://localhost:3000",
     "http://localhost:3001",
@@ -174,7 +171,7 @@ CORS_ALLOWED_ORIGINS = [
     "http://localhost:3003",
 ]
 CSRF_TRUSTED_ORIGINS = [
-    "https://c6c9-46-251-211-28.ngrok-free.app",
+    "http://80.90.185.91",
 ]
 CORS_ALLOW_METHODS = (
     "DELETE",

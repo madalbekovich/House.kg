@@ -11,8 +11,13 @@ from rest_framework_gis.serializers import GeoModelSerializer
 from django.db.models import Count
 from apps.house import exceptions
 
+class ComplexPicturesSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = models.ComplexImage
+        fields = '__all__'
 
 class ResidentialCategorySerializer(serializers.ModelSerializer):
+    images = ComplexPicturesSerializer(many=True)
     class Meta:
         model = models.ResidentialCategory
         fields = '__all__'

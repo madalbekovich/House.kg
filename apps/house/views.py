@@ -8,6 +8,8 @@ from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework.views import APIView
 from django.utils import translation
 from apps.house import exceptions
+from rest_framework import mixins as rest_mixin
+
 # your import 
 from apps.house import models
 from apps.house import serializers
@@ -15,7 +17,6 @@ from apps.house import data_serializers
 from apps.house import data_models
 from apps.house import filters
 from apps.helpers import pagination
-from apps.helpers.permission import IsAdmin
 from apps.house import mixins
 from apps.house import choices
 from apps.house.tasks import delete_post
@@ -25,10 +26,9 @@ from apps.house.tasks import delete_post
 class ComplexView(viewsets.GenericViewSet):
     queryset = models.ResidentialCategory.objects.all()
     serializer_class = serializers.ResidentialCategorySerializer
-    permission_classes = [IsAdmin, ]
     
     @action(detail=False, methods=['get'])
-    def complexes(self, request, *args, **kwargs):
+    def buildings(self, request, *args, **kwargs):
         complex_id = request.query_params.get('complex_id')
         
         if complex_id:
@@ -41,22 +41,23 @@ class ComplexView(viewsets.GenericViewSet):
         return Response(serializer.data, status=status.HTTP_200_OK)
     
     @action(detail=False, methods=['post'])
-    def add_complex(self, request, *args, **kwargs):
+    def add_buildings(self, request, *args, **kwargs):
         serializer = self.get_serializer(data=request.data)
         if serializer.is_valid():
             serializer.save(user=request.user)
             return Response({"message": "complex succes created!"}, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
     
-class PropertyView(viewsets.GenericViewSet, mixins.ViewsMixin):
+class PropertyView(rest_mixin.ListModelMixin, viewsets.GenericViewSet, mixins.ViewsMixin):
     queryset = models.Property.objects.prefetch_related('land_amenities', 'options', 'safety', 'land_options', 'room_options', 'flat_options').all().order_by('-id')
     serializer_class = serializers.AddPropertySerializer
     filter_backends = [DjangoFilterBackend, ]
     filterset_class = filters.PropertyFilter
+    pagination_class = pagination.PropertyResultsPagination
     
      
-    @action(detail=False, methods=['post'])
-    def add(self, request, *args, **kwargs):
+    @action(detail=False, methods=['post'], url_path=None)
+    def set(self, request, *args, **kwargs):
         serializer = self.get_serializer(data=request.data)
         if serializer.is_valid():
             property_instance = serializer.save(user=request.user)
@@ -67,13 +68,11 @@ class PropertyView(viewsets.GenericViewSet, mixins.ViewsMixin):
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
         
-    @action(detail=False, methods=['get'], url_path='ads')
-    def lists(self, request, *args, **kwargs):
-        queryset = self.filter_queryset(self.get_queryset())
-        paginator = pagination.PropertyResultsPagination()
-        paginated_queryset = paginator.paginate_queryset(queryset, request)
-        serializer = serializers.PropertySerializer(paginated_queryset, many=True)
-        return paginator.get_paginated_response(serializer.data)
+    # @action(detail=False, methods=['get'], url_path='ads')
+    # def lists(self, request, *args, **kwargs):
+    #     queryset = self.get_queryset()
+    #     serializer = serializers.PropertySerializer(queryset, many=True)
+    #     return Response(serializer.data)
 
     
     @action(detail=True, methods=['get'], url_path=None)
@@ -101,6 +100,7 @@ class PropertyView(viewsets.GenericViewSet, mixins.ViewsMixin):
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 class DataView(APIView):
+    serializer_class = data_serializers.CombinedSerializer
     def get(self, request):
         data = {
             'type': data_models.Type.objects.all(),
@@ -146,7 +146,7 @@ class DataView(APIView):
             'district': data_models.District.objects.all(),
         }
         
-        serializer = data_serializers.CombinedSerializer(data)
+        serializer = self.serializer_class(data)
         return Response(serializer.data)
     
 class PropertyParam(APIView):
