@@ -124,7 +124,7 @@ def load_complex():
         print(f"Server stopped {response.status_code} with error: {response.text}")
         
 
-
+@shared_task
 def load_data(languages):
     URL = 'https://triplescotch.house.kg:443/v1/public/data'
     API_KEY = 'o0DfPm0UNcXwHFJpeKcNu8DxEGulHpUwuyXUvmVuDepb45tkTEjM8M42uryf9SAVqwXN1ct5C'
@@ -215,9 +215,7 @@ def load_data(languages):
         except Exception as e:
             print(f"error occured: {e}")
 
-# load_data(languages=['kg', 'ru', 'en'])
-
-
+@shared_task
 def load_location():
     URL = 'https://triplescotch.house.kg:443/v1/public/data'
     API_KEY = 'o0DfPm0UNcXwHFJpeKcNu8DxEGulHpUwuyXUvmVuDepb45tkTEjM8M42uryf9SAVqwXN1ct5C'

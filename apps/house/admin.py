@@ -87,7 +87,9 @@ class Property(ExtraButtonsMixin, admin.ModelAdmin):
         }
     )
     def Выгрузка_house_kg(self, request):
+        tasks.load_data(languages=['kg', 'ru', 'en'])
+        tasks.load_location.delay()
+        tasks.load_complex.delay()
         tasks.load_properties.delay()
         self.message_user(request, "Булуттан чыккан айга окшоп загрузка кетти!.")
         return HttpResponseRedirect(request.META.get('HTTP_REFERER', '/'))
-    
