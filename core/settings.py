@@ -125,11 +125,14 @@ USE_TZ = True
 
 STATIC_URL = 'static/'
 
-STATIC_ROOT = os.path.join(BASE_DIR, "static/")
+STATIC_ROOT = os.path.join(
+    BASE_DIR, "static/"
+)
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 DOMAIN_NAME = 'https://c6c9-46-251-211-28.ngrok-free.app'
+
 if DEBUG:
     MEDIA_URL = '/media/' 
 else:
