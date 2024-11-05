@@ -22,6 +22,7 @@ INSTALLED_APPS = [
     
     #packages
     
+    'admin_extra_buttons',
     'mptt',
     'drf_spectacular',
     'rest_framework.authtoken',
@@ -36,7 +37,6 @@ INSTALLED_APPS = [
     'sorl.thumbnail',
     
     # apps
-    'admin_extra_buttons',
     'apps.house',
     'apps.accounts',
     'apps.main',
