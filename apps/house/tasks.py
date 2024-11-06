@@ -292,7 +292,7 @@ def load_location():
                         )
 
     except requests.exceptions.RequestException as e:
-        print(f"Error fetching data from API: {e}")
+        print(f"Error request data from API: {e}")
         
 
 @shared_task
