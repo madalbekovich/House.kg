@@ -26,19 +26,19 @@ from apps.house.tasks import delete_post
 class ComplexView(viewsets.GenericViewSet):
     queryset = models.ResidentialCategory.objects.all()
     serializer_class = serializers.ResidentialCategorySerializer
+    pagination_class = pagination.BasePagination
     
     @action(detail=False, methods=['get'])
     def buildings(self, request, *args, **kwargs):
-        complex_id = request.query_params.get('complex_id')
-        
-        if complex_id:
-            query_complex = get_object_or_404(models.ResidentialCategory, id=complex_id)
-            serializer_complex = serializers.ResidentialCategorySerializer(query_complex).data
-            return Response(serializer_complex, status=status.HTTP_200_OK)
+        queryset = self.get_queryset()
+        serializer = self.get_serializer(queryset, many=True)
+        return Response(serializer.data)
     
-        instance = self.get_queryset()
-        serializer = self.get_serializer(instance, many=True)
-        return Response(serializer.data, status=status.HTTP_200_OK)
+    @action(detail=True, methods=['get'])
+    def buildings(self, request, *args, **kwargs):
+        queryset = self.get_object()
+        serializer = self.get_serializer(queryset)
+        return Response(serializer.data)
     
     @action(detail=False, methods=['post'])
     def add_buildings(self, request, *args, **kwargs):
@@ -48,12 +48,17 @@ class ComplexView(viewsets.GenericViewSet):
             return Response({"message": "complex succes created!"}, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
     
-class PropertyView(rest_mixin.ListModelMixin, viewsets.GenericViewSet, mixins.ViewsMixin):
+class PropertyView(
+        rest_mixin.ListModelMixin,
+        rest_mixin.RetrieveModelMixin,
+        viewsets.GenericViewSet,
+        mixins.ViewsMixin
+    ):
     queryset = models.Property.objects.prefetch_related('land_amenities', 'options', 'safety', 'land_options', 'room_options', 'flat_options').all().order_by('-id')
     serializer_class = serializers.AddPropertySerializer
     filter_backends = [DjangoFilterBackend, ]
     filterset_class = filters.PropertyFilter
-    pagination_class = pagination.PropertyResultsPagination
+    pagination_class = pagination.BasePagination
     
     def get_serializer_class(self):
         if self.request.method == 'POST':
@@ -73,7 +78,7 @@ class PropertyView(rest_mixin.ListModelMixin, viewsets.GenericViewSet, mixins.Vi
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
     
     @action(detail=True, methods=['get'], url_path=None)
-    def post_control(self, request, *args, **kwargs):
+    def delete_ads(self, request, *args, **kwargs):
         instance = self.get_object()
         activate = request.query_params.get('activate', 'false').lower() == 'true'
         if activate:

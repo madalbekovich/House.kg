@@ -24,15 +24,9 @@ class CategoryAdmin(MapAdmin):
     geomap_default_latitude = "42.8777895"
     geomap_default_zoom = "12"
     geomap_height = "500px"
-    list_display = ('complex_name', 'object_state', 'get_media')
+    list_display = ('id', 'complex_name', 'object_state')
     search_fields = ('complex_name', 'id')
     inlines = [ComplexPicteresInline, ]
-
-    def get_media(self, obj):
-        if obj.media:
-            return mark_safe(f"<img src='{obj.media.url}' height='61' width='80'>")
-        return None
-    get_media.short_description = 'видимость обьекта'
 
 class PicteresInline(admin.TabularInline):
     '''Tabular Inline View for Property '''
@@ -91,5 +85,5 @@ class Property(ExtraButtonsMixin, admin.ModelAdmin):
         tasks.load_location.delay()
         tasks.load_complex.delay()
         tasks.load_properties.delay()
-        self.message_user(request, "Булуттан чыккан айга окшоп загрузка кетти!.")
+        self.message_user(request, "НАЧАЛО ВЫГРУЗКИ ДАННЫХ......")
         return HttpResponseRedirect(request.META.get('HTTP_REFERER', '/'))
