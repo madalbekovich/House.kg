@@ -314,6 +314,7 @@ def load_properties():
                 user_ids = list(User.objects.values_list('id', flat=True))
                 random_user_id = random.choice(user_ids)
                 category_instance = models.Category.objects.get(id=property.get('category'))
+                complex_id = models.ResidentialCategory.objects.get(id=property.get('building_id')) if property.get('building_id') else None
                 type_instance = models.Type.objects.get(id=property.get('type_id'))
                 rooms_instance = models.Rooms.objects.get(id=property.get('rooms')) if property.get('rooms') else None 
                 serie_instance = models.Serie.objects.get(id=property.get('serie')) if property.get('serie') else None
@@ -375,6 +376,7 @@ def load_properties():
                     owner_type=owner_type_instance,
                     floor=floor_instance,
                     floors=floors_instance,
+                    complex_id=complex_id,
                     building_type=building_type_instance,
                     serie=serie_instance,
                     price_for=price_for_instance,

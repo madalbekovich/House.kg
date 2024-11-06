@@ -9,6 +9,9 @@ from rest_framework.views import APIView
 from django.utils import translation
 from apps.house import exceptions
 from rest_framework import mixins as rest_mixin
+import time
+from django.db import connection, reset_queries
+
 
 # your import 
 from apps.house import models
@@ -54,7 +57,9 @@ class PropertyView(
         viewsets.GenericViewSet,
         mixins.ViewsMixin
     ):
-    queryset = models.Property.objects.prefetch_related('land_amenities', 'options', 'safety', 'land_options', 'room_options', 'flat_options').all().order_by('-id')
+    queryset = models.Property.objects.prefetch_related(
+        'land_amenities', 'options', 'safety', 'land_options',
+        'room_options', 'flat_options').all().order_by('-id')
     serializer_class = serializers.AddPropertySerializer
     filter_backends = [DjangoFilterBackend, ]
     filterset_class = filters.PropertyFilter
@@ -64,7 +69,17 @@ class PropertyView(
         if self.request.method == 'POST':
             return self.get_serializer_class()
         return serializers.PropertySerializer
-     
+    
+    # def list(self, request, *args, **kwargs):
+    #     start_time = time.time()  
+    #     response = super().list(request, *args, **kwargs)  
+    #     end_time = time.time()
+
+    #     elapsed_time = end_time - start_time
+    #     print(f'Запрос выполнен за {elapsed_time:.4f} секунд')  
+
+        return response
+    
     @action(detail=False, methods=['post'], url_path=None)
     def set(self, request, *args, **kwargs):
         serializer = self.get_serializer(data=request.data)
@@ -103,7 +118,25 @@ class PropertyView(
 
 class DataView(APIView):
     serializer_class = data_serializers.CombinedSerializer
+    
     def get(self, request):
+        region = request.query_params.get('region_id')
+        town = request.query_params.get('town_id')
+        response_data = {}
+
+        if region:
+            r_queryset = data_models.Town.objects.filter(region_id=region)
+            r_serializer = data_serializers.TownsSerializer(r_queryset, many=True)
+            response_data['towns'] = r_serializer.data
+
+        if town:
+            t_queryset = data_models.District.objects.filter(town_id=town)
+            t_serializer = data_serializers.DistrictSerializer(t_queryset, many=True)
+            response_data['districts'] = t_serializer.data
+
+        if town or region:
+            return Response(response_data)
+        
         data = {
             'type': data_models.Type.objects.all(),
             'category': data_models.Category.objects.all(),
@@ -128,7 +161,6 @@ class DataView(APIView):
             'comment_allowed': data_models.CommentAllowed.objects.all(),
             'parking_type': data_models.ParkingType.objects.values('id', 'translations__name'),
             'commercial_type': data_models.CommercialType.objects.values('id', 'translations__name'),
-            'town': data_models.Town.objects.all(),
             'phone_info': data_models.Phone.objects.all(),
             'internet': data_models.Internet.objects.all(),
             'toilet': data_models.Toilet.objects.all(),
@@ -145,10 +177,11 @@ class DataView(APIView):
             'currency': data_models.Currency.objects.all(),
             'possibility': data_models.Possibility.objects.all(),
             'document': data_models.Document.objects.all(),
-            'district': data_models.District.objects.all(),
         }
         
-        serializer = self.serializer_class(data)
+        response_data.update(data)
+
+        serializer = self.serializer_class(response_data)
         return Response(serializer.data)
     
 class PropertyParam(APIView):
