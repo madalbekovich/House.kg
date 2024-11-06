@@ -55,6 +55,10 @@ class PropertyView(rest_mixin.ListModelMixin, viewsets.GenericViewSet, mixins.Vi
     filterset_class = filters.PropertyFilter
     pagination_class = pagination.PropertyResultsPagination
     
+    def get_serializer_class(self):
+        if self.request.method == 'POST':
+            return self.get_serializer_class()
+        return serializers.PropertySerializer
      
     @action(detail=False, methods=['post'], url_path=None)
     def set(self, request, *args, **kwargs):
@@ -67,13 +71,6 @@ class PropertyView(rest_mixin.ListModelMixin, viewsets.GenericViewSet, mixins.Vi
                     models.Pictures.objects.create(pictures=picture, property=property_instance)
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-        
-    # @action(detail=False, methods=['get'], url_path='ads')
-    # def lists(self, request, *args, **kwargs):
-    #     queryset = self.get_queryset()
-    #     serializer = serializers.PropertySerializer(queryset, many=True)
-    #     return Response(serializer.data)
-
     
     @action(detail=True, methods=['get'], url_path=None)
     def post_control(self, request, *args, **kwargs):
