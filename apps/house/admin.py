@@ -36,7 +36,7 @@ class PicteresInline(admin.TabularInline):
 @admin.register(models.Property)
 class Property(ExtraButtonsMixin, admin.ModelAdmin):
     list_display = ['id', 'active_post']
-    search_fields = ['user__username']
+    search_fields = ['user__username', 'complex_id__complex_name__icontains']
     inlines = [PicteresInline,  ]
     
     def get_form(self, request, obj=None, **kwargs):

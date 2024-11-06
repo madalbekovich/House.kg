@@ -337,6 +337,7 @@ def load_properties():
                 mortgage_instance = models.Possibility.objects.get(id=property.get('mortgage')) if property.get('mortgage') else None
                 owner_type_instance = models.AccountType.objects.get(id=property.get('owner_type')) if property.get('owner_type') else None
                 price_for_instance = models.PriceType.objects.get(id=random.randint(1, 2))
+                complex_instance = models.ResidentialCategory.objects.get(id=property.get('building_id')) if property.get('building_id') else None
                 land_amenities_instance = models.LandAmenities.objects.filter(id__in=property.get('land_amenities')) if property.get('land_amenities') else None
                 document_instance = models.Document.objects.filter(id__in=property.get('document')) if property.get('document') else None
                 phone_info_instance = models.Phone.objects.get(id=property.get('phone_info')) if property.get('phone_info') else None
@@ -375,7 +376,7 @@ def load_properties():
                     owner_type=owner_type_instance,
                     floor=floor_instance,
                     floors=floors_instance,
-                    complex_id=property.get('building_id') if property.get('building_id') else None,
+                    complex_id=complex_instance,
                     building_type=building_type_instance,
                     serie=serie_instance,
                     price_for=price_for_instance,
