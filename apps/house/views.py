@@ -78,7 +78,7 @@ class PropertyView(
     #     elapsed_time = end_time - start_time
     #     print(f'Запрос выполнен за {elapsed_time:.4f} секунд')  
 
-        return response
+        # return response
     
     @action(detail=False, methods=['post'], url_path=None)
     def set(self, request, *args, **kwargs):
