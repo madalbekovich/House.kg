@@ -11,6 +11,10 @@ from apps.house import data_models
 from django.http import HttpResponseRedirect
 from apps.house import tasks
 
+
+@admin.register(data_models.PriceType)
+class PriceAdmin(TranslatableAdmin):
+    list_display = ['id', ]
 class ComplexPicteresInline(admin.TabularInline):
     '''Tabular Inline View for Property '''
     model = models.ComplexImage
