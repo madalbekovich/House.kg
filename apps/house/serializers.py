@@ -67,6 +67,7 @@ class PropertySerializer(GeoModelSerializer, serializers.ModelSerializer, mixins
     added_at = serializers.SerializerMethodField()
     properties_pictures = PicturesSerializer(many=True, read_only=True)
     comments = serializers.SerializerMethodField()
+    count_comments = serializers.SerializerMethodField()
     prices = PriceSerializer(many=True)
 
     class Meta:
@@ -79,7 +80,11 @@ class PropertySerializer(GeoModelSerializer, serializers.ModelSerializer, mixins
     
     def get_added_at(self, obj):
         return timesince(obj.created_at)
-
+    
+    def get_count_comments(self, obj):
+        comment_instance = Comments.objects.filter(object_id=obj.id).first()
+        return comment_instance.count_comment if comment_instance else 0
+    
 class PropertyParamSerializer(serializers.Serializer):
     def validate(self, data):
         type_deal = data.get('type_deal')
