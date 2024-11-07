@@ -21,6 +21,14 @@ class ResidentialCategorySerializer(serializers.ModelSerializer):
     class Meta:
         model = models.ResidentialCategory
         fields = '__all__'
+    
+    # def to_representation(self, instance):
+    #     representation = super().to_representation(instance)
+    #     comment_count = Review.objects.filter(complex_name=instance).count()
+    #     avarage_rating = Review.get_average_rating(instance)
+    #     representation['review_count'] = comment_count
+    #     representation['avarage_rating'] = float(avarage_rating)
+    #     return representation
         
 class PicturesSerializer(serializers.ModelSerializer):
     pictures = VersatileImageFieldSerializer(
@@ -49,7 +57,7 @@ class AddPropertySerializer(WritableNestedModelSerializer):
 class UserInfoSerializer(serializers.ModelSerializer):
     class Meta:
         model = models.User
-        fields = ['name', '_avatar']
+        fields = ['name', '_avatar', 'phone']
     
     def to_representation(self, instance):
         representation = super().to_representation(instance)
