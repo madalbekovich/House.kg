@@ -37,7 +37,7 @@ def delete_post(post_id):
 
 @shared_task
 def load_complex():
-    URL = 'https://triplescotch.house.kg:443/v1/public/buildings/?limit=100000'
+    URL = 'https://triplescotch.house.kg:443/v1/public/buildings/?limit=888'
     API_KEY = 'eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJpYXAiOjE3Mjk3MTEyODIsImV4cCI6MjA0NTA3MTI4MiwidXNlcm5hbWUiOiI5OTY3MDkzNjIzNjAiLCJpcCI6IjQ2LjI1MS4yMDYuNzkiLCJpZCI6OTM1ODYzLCJwaG9uZSI6Ijk5NjcwOTM2MjM2MCIsIm5hbWUiOiJlcmhlIn0.FQVM0c06xgSEiU8ttB3Kz3SXOgKmTUrRqVIME9Ox9WyqMRD1pi_gp5wzBJlv6HBBPWNcsZ_oAo2CCqsfdZ4HrV1X6bdfO62x-lP7nQkpIJwLCJcKkZ4aDJPZANC5ZeT8_lP-_pK9l6GQr-gGyrBbFaaRXjUZal-SqRzsVJapgI2Q3Rf7u97DKK6Bvfe2g6KHZ1cehG0g4LuexHp_o12i9OGoagRChX10OtDjCCbURC1gfYAVB7QNqJQOJTfN7PlpOhN83U-RcSY7pOPiht71_CSKrToXU7G_njF3gCTPAP3wASJwZRJjLrAAfYlo5z44GV0s39Rp6kWPRJ84YKmvEjb8GKymAAichW6Hai61bB9dltXjQ3arQds0qBTXJdZZwlRWezOEphEx5eriR9NEHHHSphh9_HV3xkWlVRFmYIdUIpjJTCGikJmch2q6J1iz9Kl6Dw81UVc1u33R0qNGJMsvYiWA5CCWIPyyR-ydjWPxs2YAzsoCcRHiicBrWGmaV11V2UDI0hx0mO73WwUsYh0zHn0PkGQpvxf2H9IP3b0QFQAmB_Wr1VAFyT8hw3h8mWM6iPvurpaep3dxc_qO0fRBvGm2OT2DuRvAQHR-oM2zq5hBOsyg7N90a8apGF1KrFDTZDBtHr5agfB8NcZxCC5ADJnZjfQvzFZQ5QuAtvM'
     AUTO_AUTH = 'o0DfPm0UNcXwHFJpeKcNu8DxEGulHpUwuyXUvmVuDepb45tkTEjM8M42uryf9SAVqwXN1ct5C'
     
@@ -52,7 +52,6 @@ def load_complex():
         data_list = response.json()
         
         complexes = data_list.get('data', {}).get('list', [])
-        count_saved = 0
                 
         for complex in complexes:
             if isinstance(complex, dict):
@@ -60,7 +59,6 @@ def load_complex():
                 latitude = complex.get('latitude')
                 longitude = complex.get('longitude')
                 floors = complex.get('floors')
-                price = complex.get('price')
                 address = complex.get('address')
                 street = complex.get('street')
                 house_number= complex.get('house_number')
@@ -68,9 +66,7 @@ def load_complex():
                 ceiling_height = complex.get('ceiling_height')
                 serie = models.Serie.objects.get(id=complex.get('serie')) if complex.get('serie') else None
                 type_heating = models.Heating.objects.get(id=complex.get('heating')) if complex.get('heating') else None
-                # material_id = models.Building.objects.get(id=complex.get('material_id')) if complex.get('material_id') else None
                 completion_date = complex.get('completion_date')
-                
                 description = complex.get('description')
                 object_state = models.BuildingState.objects.get(id=complex.get('state')) if complex.get('state') else None
                 class_id = models.BuildingClass.objects.get(id=complex.get('class')) if complex.get('class') else None
@@ -83,14 +79,13 @@ def load_complex():
                 
                 image_url = images[0]['url'] if images else None
                 try:
-                    complex_list = house_models.ResidentialCategory.objects.create(
-                        complex_name=name,
+                    complex_list = house_models.Building.objects.create(
+                        name=name,
                         crossing=crossing,
                         ceiling_height=ceiling_height,
                         about_complex=description,
                         object_state=object_state,
                         building_class=class_id,
-                        
                         website=website,
                         updated_at=updated_at,
                         media=video,
@@ -102,23 +97,29 @@ def load_complex():
                         address=address,
                         street=street,
                         serie=serie,
-                        price=price,
                         house_number=house_number,
                         completion_date=completion_date,
                     )
                     complex_list.save()
+                    for price_response in complex['prices']:
+                        if price_response:
+                            models.BuildingPrice.objects.create(
+                                building=complex_list,
+                                price=price_response['price'],
+                            )
+                        else:
+                            continue
                     for image in images:
                         image_url = image.get('url')
                         if image_url:
-
-                            house_models.ComplexImage.objects.create(
+                            house_models.BuildingImage.objects.create(
                                 complex=complex_list, 
                                 image_url=image_url
                             )
                         else: 
                             continue
                 except Exception as e:
-                    print(f"Ошибка при создании ResidentialCategory: {e}")
+                    print(f"Ошибка при создании Building: {e}")
             else:
                 print(f"Ошибка: ожидается словарь, но получена {type(complex).__name__}: {complex}")
     else:
@@ -141,7 +142,7 @@ def load_data(languages):
         'floor': data_models.Floor,
         'serie': data_models.Serie,
         'material': data_models.Material,
-        'building': data_models.Building,
+        'building': models.Building,
         'options': data_models.Options,
         'rooms': data_models.Rooms,
         'condition': data_models.Condition,
@@ -164,7 +165,7 @@ def load_data(languages):
         'exchange': data_models.Exchange,
         'rental_term': data_models.RentalTerm,
         'comment_allowed': data_models.CommentAllowed,
-        'building_type': data_models.Building,
+        'building_type': data_models.BuildingType,
         'irrigation': data_models.Irrigation,
         'land_amenities': data_models.LandAmenities,
         'land_location': data_models.LandLocation,
@@ -297,7 +298,7 @@ def load_location():
 
 @shared_task
 def load_properties():
-    URL = 'http://triplescotch.house.kg/v1/ads/?limit=10000000'
+    URL = 'http://triplescotch.house.kg/v1/ads/?limit=100'
     API_KEY = 'eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJpYXQiOjE3Mjk3MTEyODIsImV4cCI6MjA0NTA3MTI4MiwidXNlcm5hbWUiOiI5OTY3MDkzNjIzNjAiLCJpcCI6IjQ2LjI1MS4yMDYuNzkiLCJpZCI6OTM1ODYzLCJwaG9uZSI6Ijk5NjcwOTM2MjM2MCIsIm5hbWUiOiJlcmhlIn0.FQVM0c06xgSEiU8ttB3Kz3SXOgKmTUrRqVIME9Ox9WyqMRD1pi_gp5wzBJlv6HBBPWNcsZ_oAo2CCqsfdZ4HrV1X6bdfO62x-lP7nQkpIJwLCJcKkZ4aDJPZANC5ZeT8_lP-_pK9l6GQr-gGyrBbFaaRXjUZal-SqRzsVJapgI2Q3Rf7u97DKK6Bvfe2g6KHZ1cehG0g4LuexHp_o12i9OGoagRChX10OtDjCCbURC1gfYAVB7QNqJQOJTfN7PlpOhN83U-RcSY7pOPiht71_CSKrToXU7G_njF3gCTPAP3wASJwZRJjLrAAfYlo5z44GV0s39Rp6kWPRJ84YKmvEjb8GKymAAichW6Hai61bB9dltXjQ3arQds0qBTXJdZZwlRWezOEphEx5eriR9NEHHHSphh9_HV3xkWlVRFmYIdUIpjJTCGikJmch2q6J1iz9Kl6Dw81UVc1u33R0qNGJMsvYiWA5CCWIPyyR-ydjWPxs2YAzsoCcRHiicBrWGmaV11V2UDI0hx0mO73WwUsYh0zHn0PkGQpvxf2H9IP3b0QFQAmB_Wr1VAFyT8hw3h8mWM6iPvurpaep3dxc_qO0fRBvGm2OT2DuRvAQHR-oM2zq5hBOsyg7N90a8apGF1KrFDTZDBtHr5agfB8NcZxCC5ADJnZjfQvzFZQ5QuAtvM'
     AUTO_AUTH = 'o0DfPm0UNcXwHFJpeKcNu8DxEGulHpUwuyXUvmVuDepb45tkTEjM8M42uryf9SAVqwXN1ct5C'
     
@@ -321,7 +322,7 @@ def load_properties():
                 rental_term_instance = models.RentalTerm.objects.get(id=property.get('rental_term')) if property.get('rental_term') else None
                 water_instance = models.Water.objects.get(id=property.get('water')) if property.get('water') else None
                 irrigation_instance = models.Irrigation.objects.get(id=property.get('irrigation')) if property.get('irrigation') else None
-                building_type_instance = models.Building.objects.get(id=property.get('building_type')) if property.get('building_type') else None
+                building_type_instance = models.BuildingType.objects.get(id=property.get('building_type')) if property.get('building_type') else None
                 floor_instance = models.Floor.objects.get(id=property.get('floor')) if property.get('floor') else None
                 floors_instance = models.Floor.objects.get(id=property.get('floors')) if property.get('floors') else None
                 flooring_instance = models.Flooring.objects.get(id=property.get('flooring')) if property.get('flooring') else None
@@ -337,7 +338,7 @@ def load_properties():
                 mortgage_instance = models.Possibility.objects.get(id=property.get('mortgage')) if property.get('mortgage') else None
                 owner_type_instance = models.AccountType.objects.get(id=property.get('owner_type')) if property.get('owner_type') else None
                 price_for_instance = models.PriceType.objects.get(id=random.randint(1, 2))
-                complex_instance = models.ResidentialCategory.objects.get(id=property.get('building_id')) if property.get('building_id') else None
+                complex_instance = models.Building.objects.get(id=property.get('building_id')) if property.get('building_id') else None
                 land_amenities_instance = models.LandAmenities.objects.filter(id__in=property.get('land_amenities')) if property.get('land_amenities') else None
                 document_instance = models.Document.objects.filter(id__in=property.get('document')) if property.get('document') else None
                 phone_info_instance = models.Phone.objects.get(id=property.get('phone_info')) if property.get('phone_info') else None
@@ -363,6 +364,7 @@ def load_properties():
                 land_location_instance = models.LandLocation.objects.get(id=property.get('land_location')) if property.get('land_location') else None
                 longitude = property.get('longitude')
                 latitude = property.get('latitude')
+                phones = property.get('phones', [])
                 point = Point(longitude, latitude)
                 property_instance = models.Property.objects.create(
                     user_id=random_user_id,
@@ -407,7 +409,6 @@ def load_properties():
                     gas=gas_instance,
                     balkony=balcony_instance,
                     furniture=furniture_instance,
-                    
                     land_square=property.get('land_square'),
                     living_square=property.get('living_square'),
                     kitchen_square=property.get('kitchen_square'),
@@ -421,7 +422,7 @@ def load_properties():
                     description=property.get('description'),
                     street=property.get('address')
                 )
-                    
+                
                 def save_image(cleaned_url, property_instance):
                     response = requests.get(cleaned_url)
                     if response.status_code == 200:
@@ -430,12 +431,17 @@ def load_properties():
                         property_picture.pictures.save(filename, ContentFile(response.content), save=True)
                 with ThreadPoolExecutor(max_workers=5) as executor:
                     executor.map(lambda url: save_image(url, property_instance), [img['big'] for img in property['images']])
-                        
+                  
                 for price_response in property['prices']:
                     models.Price.objects.create(
                         property=property_instance,
                         price=price_response['price'],
                         m2_price=price_response['m2_price']
+                    )
+                if phones:
+                    models.Phones.objects.create(
+                        property=property_instance,
+                        phones=phones 
                     )
                 
                 property_instance.options.set(options_instance)
@@ -446,10 +452,12 @@ def load_properties():
                 property_instance.documents.set(document_instance),
                 property_instance.flat_options.set(flat_options_instance)
 
-                # user #
+            #     # user #
                 
                 
                 # fake = Faker()
+                # user_image = property.get('user_image')
+                # user_name = property.get('user_name')
                 # fake_email = fake.ascii_email()
                 # fake_username = fake.name()
                 # avatar = user_image if user_image else None
@@ -468,5 +476,5 @@ def load_properties():
                 
                 
     except Exception as e:
-        # traceback.print_exc() 
+        traceback.print_exc() 
         print(f'Братан что то упустил: \n {e}')

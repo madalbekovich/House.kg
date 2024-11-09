@@ -8,27 +8,32 @@ from versatileimagefield.serializers import VersatileImageFieldSerializer
 from apps.main.serializers import CommentListSerializer
 from django.utils.timesince import timesince
 from rest_framework_gis.serializers import GeoModelSerializer
-from django.db.models import Count
 from apps.house import exceptions
 
-class ComplexPicturesSerializer(serializers.ModelSerializer):
+class BuildingPriceSerializer(serializers.ModelSerializer):
     class Meta:
-        model = models.ComplexImage
+        model = models.BuildingPrice
         fields = '__all__'
 
-class ResidentialCategorySerializer(serializers.ModelSerializer):
-    images = ComplexPicturesSerializer(many=True)
+class BuildingImagesSerializer(serializers.ModelSerializer):
     class Meta:
-        model = models.ResidentialCategory
+        model = models.BuildingImage
+        fields = '__all__'
+
+class BuildingsSerializer(serializers.ModelSerializer):
+    images = BuildingImagesSerializer(many=True)
+    prices = BuildingPriceSerializer(many=True)
+    class Meta:
+        model = models.Building
         fields = '__all__'
     
-    # def to_representation(self, instance):
-    #     representation = super().to_representation(instance)
-    #     comment_count = Review.objects.filter(complex_name=instance).count()
-    #     avarage_rating = Review.get_average_rating(instance)
-    #     representation['review_count'] = comment_count
-    #     representation['avarage_rating'] = float(avarage_rating)
-    #     return representation
+    def to_representation(self, instance):
+        representation = super().to_representation(instance)
+        comment_count = instance.reviews.count()
+        avarage_rating = Review.get_average_rating(instance)
+        representation['review_count'] = comment_count
+        representation['avarage_rating'] = float(avarage_rating)
+        return representation   
         
 class PicturesSerializer(serializers.ModelSerializer):
     pictures = VersatileImageFieldSerializer(
@@ -48,6 +53,15 @@ class PriceSerializer(serializers.ModelSerializer):
         model = models.Price
         fields = '__all__'
         
+class PhonesSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = models.Phones
+        fields = ['phones']
+    
+    def to_representation(self, instance):
+        representation = super().to_representation(instance)
+        return representation['phones']
+        
 class AddPropertySerializer(WritableNestedModelSerializer):
     properties_pictures = PicturesSerializer(many=True, required=False)
     class Meta:
@@ -57,12 +71,12 @@ class AddPropertySerializer(WritableNestedModelSerializer):
 class UserInfoSerializer(serializers.ModelSerializer):
     class Meta:
         model = models.User
-        fields = ['name', '_avatar', 'phone']
+        fields = ['id', 'name', '_avatar', 'phone']
     
     def to_representation(self, instance):
         representation = super().to_representation(instance)
         posted_count = models.Property.objects.filter(user=instance).count()
-        comment_count = Review.objects.filter(user=instance).count()
+        comment_count = instance.reviews.count()
         avarage_rating = Review.get_average_rating(instance)
         representation['name'] = representation['name'] if representation['name'] else 'пользователь'
         representation['review_count'] = comment_count
@@ -77,6 +91,7 @@ class PropertySerializer(GeoModelSerializer, serializers.ModelSerializer, mixins
     comments = serializers.SerializerMethodField()
     count_comments = serializers.SerializerMethodField()
     prices = PriceSerializer(many=True)
+    phones = PhonesSerializer(many=True)
 
     class Meta:
         model = models.Property

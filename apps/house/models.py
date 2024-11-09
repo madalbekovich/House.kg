@@ -1,28 +1,28 @@
 from django.utils.translation import gettext_lazy as _
+from apps.main.models import Review
 from django_resized import ResizedImageField
 from django.db import models
 from django.utils import timezone
 from versatileimagefield.fields import VersatileImageField
-from mptt.models import MPTTModel, TreeForeignKey
 from django.core.validators import MaxValueValidator, MinValueValidator
 from django_admin_geomap import GeoItem 
 from django.contrib.gis.db.models import PointField
 from apps.accounts.models import User, BusinessAccount
 from apps.house import data_models
-from apps.house import choices
 from apps.house.validators import ENIValidator, validate_youtube_url
 from .data_models import *
 from apps.tariffs.models import AbstractAdFeatures
+from django.contrib.postgres.fields import ArrayField
+from django.contrib.contenttypes.fields import GenericRelation
 
 
-class ResidentialCategory(models.Model, GeoItem):
-    # Основные характеристики
-    complex_name = models.CharField(max_length=255, verbose_name='Название комплекса', null=True, blank=True)
+class Building(models.Model, GeoItem):
+    name = models.CharField(max_length=255, verbose_name='Название комплекса', null=True, blank=True)
+    reviews = GenericRelation(Review, related_query_name='reviews')
     region_id = models.ForeignKey(data_models.Region, on_delete=models.CASCADE, blank=True, null=True)
     town_id = models.ForeignKey(data_models.Town, on_delete=models.CASCADE, null=True, blank=True)
     district_id = models.ForeignKey(data_models.District, on_delete=models.CASCADE, null=True, blank=True)
     microdistrict_id = models.ForeignKey(data_models.MicroDistrict, on_delete=models.CASCADE, null=True, blank=True)
-    price = models.IntegerField(_("Цена"), null=True, blank=True)
     lon = models.FloatField()  
     lat = models.FloatField()
     serie = models.ForeignKey(data_models.Serie, on_delete=models.CASCADE, null=True, blank=True)
@@ -35,7 +35,7 @@ class ResidentialCategory(models.Model, GeoItem):
     ceiling_height = models.DecimalField(_("Высота потолков"), max_digits=5, decimal_places=2, null=True, blank=True)
     heating = models.ForeignKey(data_models.Heating, on_delete=models.CASCADE,  verbose_name=_("Тип отопления") , null=True, blank=True)
     building_class = models.ForeignKey(data_models.BuildingClass, on_delete=models.CASCADE, verbose_name=_("Тип класса"), max_length=50,null=True, blank=True)
-    material_id = models.ForeignKey(data_models.Building, on_delete=models.CASCADE, verbose_name=_("Тип строения"), null=True, blank=True)
+    material_id = models.ForeignKey(data_models.BuildingType, on_delete=models.CASCADE, verbose_name=_("Тип строения"), null=True, blank=True)
     storey = models.IntegerField(_("Этажность"), validators=[MaxValueValidator(50)], null=True, blank=True)
     about_complex = models.TextField(_("Об объекте"), null=True, blank=True)
     media = models.FileField(upload_to='uploads/', null=True, blank=True)
@@ -47,14 +47,14 @@ class ResidentialCategory(models.Model, GeoItem):
     
     @property
     def geomap_longitude(self):
-        return self.complex_name if self.lon is None else str(self.lon)
+        return self.name if self.lon is None else str(self.lon)
 
     @property
     def geomap_latitude(self):
-        return self.complex_name if self.lat is None else str(self.lat)
+        return self.name if self.lat is None else str(self.lat)
     
     def __str__(self):
-        return f"{self.complex_name} Цена: {self.price}$"
+        return f"{self.name} Цена: $"
 
     class Meta:
         ordering = ['id']
@@ -113,7 +113,7 @@ class Property(AbstractAdFeatures,  models.Model):
         verbose_name=_('Поливная вода')
     )
     building_type = models.ForeignKey(
-        data_models.Building,
+        data_models.BuildingType,
         on_delete=models.CASCADE,
         null=True,
         blank=True,
@@ -221,7 +221,7 @@ class Property(AbstractAdFeatures,  models.Model):
     )
     street = models.CharField(
         _("Улица"), 
-        max_length=50, 
+        max_length=100, 
         null=True, 
         blank=True
     )
@@ -466,7 +466,7 @@ class Property(AbstractAdFeatures,  models.Model):
         blank=True,
     )
     complex_id = models.ForeignKey(
-        ResidentialCategory,
+        Building,
         verbose_name=_("Название комплекса"),
         on_delete=models.CASCADE,
         related_name='complex_property',
@@ -493,12 +493,9 @@ class Pictures(models.Model):
         verbose_name = _("Фотография")
         verbose_name_plural = _("Фотографии")
         
-class ComplexImage(models.Model):
-    complex = models.ForeignKey(ResidentialCategory, related_name='images', on_delete=models.CASCADE, null=True, blank=True)
+class BuildingImage(models.Model):
+    complex = models.ForeignKey(Building, related_name='images', on_delete=models.CASCADE, null=True, blank=True)
     image_url = models.URLField(max_length=500, null=True, blank=True)
-
-    def __str__(self):
-        return f"Image for {self.complex.complex_name}"
     
 class Price(models.Model):
     property = models.ForeignKey(
@@ -512,3 +509,22 @@ class Price(models.Model):
     m2_price = models.PositiveIntegerField(
         _('цена за метр')
     )
+
+class BuildingPrice(models.Model):
+    building = models.ForeignKey(
+        Building,
+        on_delete=models.CASCADE,
+        related_name='prices'
+    )
+    price = models.IntegerField(
+        _("Цена"), 
+    )
+    
+class Phones(models.Model):
+    property = models.ForeignKey(Property, on_delete=models.CASCADE, related_name='phones')
+    phones = ArrayField(
+        models.CharField(max_length=15),
+        blank=True,
+        default=list
+    )
+    

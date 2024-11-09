@@ -11,22 +11,22 @@ from apps.house import data_models
 from django.http import HttpResponseRedirect
 from apps.house import tasks
 
-class ComplexPicteresInline(admin.TabularInline):
+class BuildingImageInline(admin.TabularInline):
     '''Tabular Inline View for Property '''
-    model = models.ComplexImage
-    extra = 1
+    model = models.BuildingImage
+    extra = 1   
     
-@admin.register(models.ResidentialCategory)
-class CategoryAdmin(MapAdmin):
+@admin.register(models.Building)
+class BuildingAdmin(MapAdmin):
     geomap_field_longitude = "id_lon"
     geomap_field_latitude = "id_lat"
     geomap_default_longitude = "74.6066926"
     geomap_default_latitude = "42.8777895"
     geomap_default_zoom = "12"
     geomap_height = "500px"
-    list_display = ('id', 'complex_name', 'object_state')
-    search_fields = ('complex_name', 'id')
-    inlines = [ComplexPicteresInline, ]
+    list_display = ('id', 'name', 'object_state')
+    search_fields = ('name', 'id')
+    inlines = [BuildingImageInline, ]
 
 class PicteresInline(admin.TabularInline):
     '''Tabular Inline View for Property '''

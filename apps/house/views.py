@@ -27,8 +27,8 @@ from apps.house.tasks import delete_post
 
 
 class ComplexView(viewsets.GenericViewSet):
-    queryset = models.ResidentialCategory.objects.all()
-    serializer_class = serializers.ResidentialCategorySerializer
+    queryset = models.Building.objects.all()
+    serializer_class = serializers.BuildingsSerializer
     pagination_class = pagination.BasePagination
     
     @action(detail=False, methods=['get'])
@@ -38,7 +38,7 @@ class ComplexView(viewsets.GenericViewSet):
         return Response(serializer.data)
     
     @action(detail=True, methods=['get'])
-    def buildings(self, request, *args, **kwargs):
+    def building(self, request, *args, **kwargs):
         queryset = self.get_object()
         serializer = self.get_serializer(queryset)
         return Response(serializer.data)

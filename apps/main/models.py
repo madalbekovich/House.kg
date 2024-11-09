@@ -32,11 +32,16 @@ class Comments(MPTTModel):
     
 
 class Review(models.Model):
-    user = models.ForeignKey(User, null=True, blank=True, on_delete=models.SET_NULL)
-    company = models.ForeignKey(BusinessAccount, null=True, blank=True, on_delete=models.SET_NULL)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    content_type = models.ForeignKey(ContentType, on_delete=models.CASCADE)
+    object_id = models.CharField(max_length=200)
+    content_object = GenericForeignKey('content_type', 'object_id')
     rating = models.PositiveIntegerField(validators=[MaxValueValidator(5)])
     comment = models.TextField()
     
     @staticmethod
-    def get_average_rating(user):
-        return Review.objects.filter(user=user).aggregate(Avg('rating'))['rating__avg'] or 0
+    def get_average_rating(instance):
+        reviews = instance.reviews.all()
+        if reviews.exists():
+            return reviews.aggregate(Avg('rating'))['rating__avg'] or 0
+        return 0

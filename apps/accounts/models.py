@@ -4,7 +4,7 @@ from django.contrib.auth.models import AbstractUser
 from django.db import models
 import random
 import uuid
-
+from django.contrib.contenttypes.fields import GenericRelation
 from .managers import UserManager
 from apps.helpers import choices
 
@@ -34,6 +34,7 @@ class User(AbstractUser, BaseModel):
         null=True,
         # unique=True
     )
+    reviews = GenericRelation('main.Review', related_query_name='reviews')
     name = models.CharField(
         max_length=50,
         blank=True,

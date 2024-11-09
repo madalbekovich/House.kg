@@ -75,7 +75,7 @@ class Material(TranslatableModel):
         verbose_name = _("Материал")
         verbose_name_plural = _("Материалы")
 
-class Building(TranslatableModel):
+class BuildingType(TranslatableModel):
     translations = TranslatedFields(
         name=models.CharField(max_length=50)
     )
