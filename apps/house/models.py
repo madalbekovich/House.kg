@@ -1,5 +1,5 @@
 from django.utils.translation import gettext_lazy as _
-from apps.main.models import Review
+from apps.main.models import Review, Comments
 from django_resized import ResizedImageField
 from django.db import models
 from django.utils import timezone
@@ -473,6 +473,7 @@ class Property(AbstractAdFeatures,  models.Model):
         null=True,
         blank=True,
     )
+    comments = GenericRelation(Comments, related_query_name='comments')
 
     class Meta:
         verbose_name = _("Недвижимость")

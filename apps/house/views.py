@@ -8,6 +8,7 @@ from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework.views import APIView
 from django.utils import translation
 from apps.house import exceptions
+from django.db.models import Count
 from rest_framework import mixins as rest_mixin
 import time
 from django.db import connection, reset_queries
@@ -57,9 +58,14 @@ class PropertyView(
         viewsets.GenericViewSet,
         mixins.ViewsMixin
     ):
-    queryset = models.Property.objects.prefetch_related(
+    queryset = models.Property.objects.select_related(
+    'user', 'category', 'type_id', 'region', 'town', 'district', 'microdistrict', 'complex_id', 'business_account',
+    ).prefetch_related(
         'land_amenities', 'options', 'safety', 'land_options',
-        'room_options', 'flat_options').all().order_by('-id')
+        'room_options', 'flat_options', 'documents',
+        ).annotate(
+            count_comments=Count('comments')
+            ).all().order_by('-id')
     serializer_class = serializers.AddPropertySerializer
     filter_backends = [DjangoFilterBackend, ]
     filterset_class = filters.PropertyFilter
