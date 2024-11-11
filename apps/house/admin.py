@@ -15,6 +15,9 @@ class BuildingImageInline(admin.TabularInline):
     '''Tabular Inline View for Property '''
     model = models.BuildingImage
     extra = 1   
+@admin.register(data_models.PriceType)
+class Test(TranslatableAdmin):
+    list_display = ('id', )
     
 @admin.register(models.Building)
 class BuildingAdmin(MapAdmin):
