@@ -312,166 +312,166 @@ def load_properties():
             data_list = response.json()
             properties = data_list.get('data', {}).get('list', [])
             for property in properties:
-                user_ids = list(User.objects.values_list('id', flat=True))
-                random_user_id = random.choice(user_ids)
-                category_instance = models.Category.objects.get(id=property.get('category'))
-                type_instance = models.Type.objects.get(id=property.get('type_id'))
-                rooms_instance = models.Rooms.objects.get(id=property.get('rooms')) if property.get('rooms') else None 
-                serie_instance = models.Serie.objects.get(id=property.get('serie')) if property.get('serie') else None
-                material_instance = models.Material.objects.get(id=property.get('material')) if property.get('material') else None
-                rental_term_instance = models.RentalTerm.objects.get(id=property.get('rental_term')) if property.get('rental_term') else None
-                water_instance = models.Water.objects.get(id=property.get('water')) if property.get('water') else None
-                irrigation_instance = models.Irrigation.objects.get(id=property.get('irrigation')) if property.get('irrigation') else None
-                building_type_instance = models.BuildingType.objects.get(id=property.get('building_type')) if property.get('building_type') else None
-                floor_instance = models.Floor.objects.get(id=property.get('floor')) if property.get('floor') else None
-                floors_instance = models.Floor.objects.get(id=property.get('floors')) if property.get('floors') else None
-                flooring_instance = models.Flooring.objects.get(id=property.get('flooring')) if property.get('flooring') else None
-                heating_instance = models.Heating.objects.get(id=property.get('heating')) if property.get('heating') else None
-                condition_instance = models.Condition.objects.get(id=property.get('condition')) if property.get('condition') else None
-                region_instance = models.Region.objects.get(id=property.get('region')) if property.get('region') else None
-                town_instance = models.Town.objects.get(id=property.get('town')) if property.get('town') else None
-                district_instance = models.District.objects.get(id=property.get('district')) if property.get('district') else None
-                microdistrict_instance = models.MicroDistrict.objects.get(id=property.get('micro_district')) if property.get('micro_district') else None
-                currency_instance = models.Currency.objects.get(id=property.get('currency_id')) if property.get('currency_id') else None
-                exchange_instance = models.Exchange.objects.get(id=property.get('exchange')) if property.get('exchange') else None
-                installment_instance = models.Possibility.objects.get(id=property.get('installment')) if property.get('installment') else None
-                mortgage_instance = models.Possibility.objects.get(id=property.get('mortgage')) if property.get('mortgage') else None
-                owner_type_instance = models.AccountType.objects.get(id=property.get('owner_type')) if property.get('owner_type') else None
-                price_for_instance = models.PriceType.objects.get(id=random.randint(1, 2))
-                complex_instance = models.Building.objects.get(id=property.get('building_id')) if property.get('building_id') else None
-                land_amenities_instance = models.LandAmenities.objects.filter(id__in=property.get('land_amenities')) if property.get('land_amenities') else None
-                document_instance = models.Document.objects.filter(id__in=property.get('document')) if property.get('document') else None
-                phone_info_instance = models.Phone.objects.get(id=property.get('phone_info')) if property.get('phone_info') else None
-                canalization_instance = models.Canalization.objects.get(id=property.get('canalization')) if property.get('canalization') else None
-                electricity_instance = models.Electricity.objects.get(id=property.get('electricity')) if property.get('electricity') else None
-                room_location_instance = models.RoomLocation.objects.get(id=property.get('room_location')) if property.get('room_location') else None
-                toilet_instance = models.Toilet.objects.get(id=property.get('toilet')) if property.get('toilet') else None
-                parking_instance = models.Parking.objects.get(id=property.get('parking')) if property.get('parking') else None
-                parking_type_instance = models.ParkingType.objects.get(id=property.get('parking_type')) if property.get('parking_type') else None
-                door_instance = models.Door.objects.get(id=property.get('door')) if property.get('door') else None
-                comment_allowed_instance = models.CommentAllowed.objects.get(id=property.get('comment_allowed')) if property.get('comment_allowed') else None
-                commercial_type_instance = models.CommercialType.objects.get(id=property.get('commercial_type')) if property.get('commercial_type') else None
-                internet_instance = models.Internet.objects.get(id=property.get('internet')) if property.get('internet') else None
-                gas_instance = models.Gas.objects.get(id=property.get('gas')) if property.get('gas') else None
-                balcony_instance = models.Balcony.objects.get(id=property.get('balcony')) if property.get('balcony') else None
-                furniture_instance = models.Furniture.objects.get(id=property.get('furniture')) if property.get('furniture') else None
+                # user_ids = list(User.objects.values_list('id', flat=True))
+                # random_user_id = random.choice(user_ids)
+                # category_instance = models.Category.objects.get(id=property.get('category'))
+                # type_instance = models.Type.objects.get(id=property.get('type_id'))
+                # rooms_instance = models.Rooms.objects.get(id=property.get('rooms')) if property.get('rooms') else None 
+                # serie_instance = models.Serie.objects.get(id=property.get('serie')) if property.get('serie') else None
+                # material_instance = models.Material.objects.get(id=property.get('material')) if property.get('material') else None
+                # rental_term_instance = models.RentalTerm.objects.get(id=property.get('rental_term')) if property.get('rental_term') else None
+                # water_instance = models.Water.objects.get(id=property.get('water')) if property.get('water') else None
+                # irrigation_instance = models.Irrigation.objects.get(id=property.get('irrigation')) if property.get('irrigation') else None
+                # building_type_instance = models.BuildingType.objects.get(id=property.get('building_type')) if property.get('building_type') else None
+                # floor_instance = models.Floor.objects.get(id=property.get('floor')) if property.get('floor') else None
+                # floors_instance = models.Floor.objects.get(id=property.get('floors')) if property.get('floors') else None
+                # flooring_instance = models.Flooring.objects.get(id=property.get('flooring')) if property.get('flooring') else None
+                # heating_instance = models.Heating.objects.get(id=property.get('heating')) if property.get('heating') else None
+                # condition_instance = models.Condition.objects.get(id=property.get('condition')) if property.get('condition') else None
+                # region_instance = models.Region.objects.get(id=property.get('region')) if property.get('region') else None
+                # town_instance = models.Town.objects.get(id=property.get('town')) if property.get('town') else None
+                # district_instance = models.District.objects.get(id=property.get('district')) if property.get('district') else None
+                # microdistrict_instance = models.MicroDistrict.objects.get(id=property.get('micro_district')) if property.get('micro_district') else None
+                # currency_instance = models.Currency.objects.get(id=property.get('currency_id')) if property.get('currency_id') else None
+                # exchange_instance = models.Exchange.objects.get(id=property.get('exchange')) if property.get('exchange') else None
+                # installment_instance = models.Possibility.objects.get(id=property.get('installment')) if property.get('installment') else None
+                # mortgage_instance = models.Possibility.objects.get(id=property.get('mortgage')) if property.get('mortgage') else None
+                # owner_type_instance = models.AccountType.objects.get(id=property.get('owner_type')) if property.get('owner_type') else None
+                # price_for_instance = models.PriceType.objects.get(id=random.randint(1, 2))
+                # complex_instance = models.Building.objects.get(id=property.get('building_id')) if property.get('building_id') else None
+                # land_amenities_instance = models.LandAmenities.objects.filter(id__in=property.get('land_amenities')) if property.get('land_amenities') else None
+                # document_instance = models.Document.objects.filter(id__in=property.get('document')) if property.get('document') else None
+                # phone_info_instance = models.Phone.objects.get(id=property.get('phone_info')) if property.get('phone_info') else None
+                # canalization_instance = models.Canalization.objects.get(id=property.get('canalization')) if property.get('canalization') else None
+                # electricity_instance = models.Electricity.objects.get(id=property.get('electricity')) if property.get('electricity') else None
+                # room_location_instance = models.RoomLocation.objects.get(id=property.get('room_location')) if property.get('room_location') else None
+                # toilet_instance = models.Toilet.objects.get(id=property.get('toilet')) if property.get('toilet') else None
+                # parking_instance = models.Parking.objects.get(id=property.get('parking')) if property.get('parking') else None
+                # parking_type_instance = models.ParkingType.objects.get(id=property.get('parking_type')) if property.get('parking_type') else None
+                # door_instance = models.Door.objects.get(id=property.get('door')) if property.get('door') else None
+                # comment_allowed_instance = models.CommentAllowed.objects.get(id=property.get('comment_allowed')) if property.get('comment_allowed') else None
+                # commercial_type_instance = models.CommercialType.objects.get(id=property.get('commercial_type')) if property.get('commercial_type') else None
+                # internet_instance = models.Internet.objects.get(id=property.get('internet')) if property.get('internet') else None
+                # gas_instance = models.Gas.objects.get(id=property.get('gas')) if property.get('gas') else None
+                # balcony_instance = models.Balcony.objects.get(id=property.get('balcony')) if property.get('balcony') else None
+                # furniture_instance = models.Furniture.objects.get(id=property.get('furniture')) if property.get('furniture') else None
                 
-                options_instance = models.Options.objects.filter(id__in=property.get('options')) if property.get('options') else None
-                room_options_instance = models.RoomOption.objects.filter(id__in=property.get('room_option')) if property.get('room_option') else None
-                safety_instance = models.Safety.objects.filter(id__in=property.get('safety')) if property.get('safety') else None
-                flat_options_instance = models.FlatOptions.objects.filter(id__in=property.get('flat_options')) if property.get('flat_options') else None
-                land_options_instance = models.LandOptions.objects.filter(id__in=property.get('land_options')) if property.get('land_options') else None
-                land_location_instance = models.LandLocation.objects.get(id=property.get('land_location')) if property.get('land_location') else None
-                longitude = property.get('longitude')
-                latitude = property.get('latitude')
+                # options_instance = models.Options.objects.filter(id__in=property.get('options')) if property.get('options') else None
+                # room_options_instance = models.RoomOption.objects.filter(id__in=property.get('room_option')) if property.get('room_option') else None
+                # safety_instance = models.Safety.objects.filter(id__in=property.get('safety')) if property.get('safety') else None
+                # flat_options_instance = models.FlatOptions.objects.filter(id__in=property.get('flat_options')) if property.get('flat_options') else None
+                # land_options_instance = models.LandOptions.objects.filter(id__in=property.get('land_options')) if property.get('land_options') else None
+                # land_location_instance = models.LandLocation.objects.get(id=property.get('land_location')) if property.get('land_location') else None
+                # longitude = property.get('longitude')
+                # latitude = property.get('latitude')
                 phones = property.get('phones', [])
-                point = Point(longitude, latitude)
-                property_instance = models.Property.objects.create(
-                    user_id=random_user_id,
-                    type_id=type_instance,
-                    category=category_instance,
-                    rooms=rooms_instance,
-                    material=material_instance,
-                    water=water_instance,
-                    irrigation=irrigation_instance,
-                    rental_term=rental_term_instance,
-                    owner_type=owner_type_instance,
-                    floor=floor_instance,
-                    floors=floors_instance,
-                    complex_id=complex_instance,
-                    building_type=building_type_instance,
-                    serie=serie_instance,
-                    price_for=price_for_instance,
-                    flooring=flooring_instance,
-                    heating=heating_instance,
-                    condition=condition_instance,
-                    region=region_instance,
-                    district=district_instance,
-                    town=town_instance,
-                    microdistrict=microdistrict_instance,
-                    point=point,
-                    currency=currency_instance,
-                    mortgage=mortgage_instance,
-                    installment=installment_instance,
-                    exchange=exchange_instance,
-                    land_location=land_location_instance,
-                    phone_info=phone_info_instance,
-                    canalization=canalization_instance,
-                    electricity=electricity_instance,
-                    room_location=room_location_instance,
-                    toilet=toilet_instance,
-                    parking=parking_instance,
-                    parking_type=parking_type_instance,
-                    door=door_instance,
-                    comment_allowed=comment_allowed_instance,
-                    commercial_type=commercial_type_instance,
-                    internet=internet_instance,
-                    gas=gas_instance,
-                    balkony=balcony_instance,
-                    furniture=furniture_instance,
-                    land_square=property.get('land_square'),
-                    living_square=property.get('living_square'),
-                    kitchen_square=property.get('kitchen_square'),
-                    ceiling_height=property.get('ceiling_height'),
-                    square=property.get('square'),
-                    year=property.get('year'),
-                    cadastre_number=property.get('cadastre_number'),
-                    house_number=property.get('house_number'),
-                    crossing=property.get('crossing'),
-                    youtube_url=property.get('video_url'),
-                    description=property.get('description'),
-                    street=property.get('address')
-                )
+                # point = Point(longitude, latitude)
+                # property_instance = models.Property.objects.create(
+                #     user_id=random_user_id,
+                #     type_id=type_instance,
+                #     category=category_instance,
+                #     rooms=rooms_instance,
+                #     material=material_instance,
+                #     water=water_instance,
+                #     irrigation=irrigation_instance,
+                #     rental_term=rental_term_instance,
+                #     owner_type=owner_type_instance,
+                #     floor=floor_instance,
+                #     floors=floors_instance,
+                #     complex_id=complex_instance,
+                #     building_type=building_type_instance,
+                #     serie=serie_instance,
+                #     price_for=price_for_instance,
+                #     flooring=flooring_instance,
+                #     heating=heating_instance,
+                #     condition=condition_instance,
+                #     region=region_instance,
+                #     district=district_instance,
+                #     town=town_instance,
+                #     microdistrict=microdistrict_instance,
+                #     point=point,
+                #     currency=currency_instance,
+                #     mortgage=mortgage_instance,
+                #     installment=installment_instance,
+                #     exchange=exchange_instance,
+                #     land_location=land_location_instance,
+                #     phone_info=phone_info_instance,
+                #     canalization=canalization_instance,
+                #     electricity=electricity_instance,
+                #     room_location=room_location_instance,
+                #     toilet=toilet_instance,
+                #     parking=parking_instance,
+                #     parking_type=parking_type_instance,
+                #     door=door_instance,
+                #     comment_allowed=comment_allowed_instance,
+                #     commercial_type=commercial_type_instance,
+                #     internet=internet_instance,
+                #     gas=gas_instance,
+                #     balkony=balcony_instance,
+                #     furniture=furniture_instance,
+                #     land_square=property.get('land_square'),
+                #     living_square=property.get('living_square'),
+                #     kitchen_square=property.get('kitchen_square'),
+                #     ceiling_height=property.get('ceiling_height'),
+                #     square=property.get('square'),
+                #     year=property.get('year'),
+                #     cadastre_number=property.get('cadastre_number'),
+                #     house_number=property.get('house_number'),
+                #     crossing=property.get('crossing'),
+                #     youtube_url=property.get('video_url'),
+                #     description=property.get('description'),
+                #     street=property.get('address')
+                # )
                 
-                def save_image(cleaned_url, property_instance):
-                    response = requests.get(cleaned_url)
-                    if response.status_code == 200:
-                        filename = cleaned_url.split('/')[-1]
-                        property_picture = models.Pictures.objects.create(property=property_instance)
-                        property_picture.pictures.save(filename, ContentFile(response.content), save=True)
-                with ThreadPoolExecutor(max_workers=5) as executor:
-                    executor.map(lambda url: save_image(url, property_instance), [img['big'] for img in property['images']])
+                # def save_image(cleaned_url, property_instance):
+                #     response = requests.get(cleaned_url)
+                #     if response.status_code == 200:
+                #         filename = cleaned_url.split('/')[-1]
+                #         property_picture = models.Pictures.objects.create(property=property_instance)
+                #         property_picture.pictures.save(filename, ContentFile(response.content), save=True)
+                # with ThreadPoolExecutor(max_workers=5) as executor:
+                #     executor.map(lambda url: save_image(url, property_instance), [img['big'] for img in property['images']])
                   
-                for price_response in property['prices']:
-                    models.Price.objects.create(
-                        property=property_instance,
-                        price=price_response['price'],
-                        m2_price=price_response['m2_price']
-                    )
-                if phones:
-                    models.Phones.objects.create(
-                        property=property_instance,
-                        phones=phones 
-                    )
+                # for price_response in property['prices']:
+                #     models.Price.objects.create(
+                #         property=property_instance,
+                #         price=price_response['price'],
+                #         m2_price=price_response['m2_price']
+                #     )
+                # if phones:
+                #     models.Phones.objects.create(
+                #         property=property_instance,
+                #         phones=phones 
+                #     )
                 
-                property_instance.options.set(options_instance)
-                property_instance.land_amenities.set(land_amenities_instance)
-                property_instance.safety.set(safety_instance)
-                property_instance.room_options.set(room_options_instance)
-                property_instance.land_options.set(land_options_instance)
-                property_instance.documents.set(document_instance),
-                property_instance.flat_options.set(flat_options_instance)
+                # property_instance.options.set(options_instance)
+                # property_instance.land_amenities.set(land_amenities_instance)
+                # property_instance.safety.set(safety_instance)
+                # property_instance.room_options.set(room_options_instance)
+                # property_instance.land_options.set(land_options_instance)
+                # property_instance.documents.set(document_instance),
+                # property_instance.flat_options.set(flat_options_instance)
 
             #     # user #
                 
                 
-                # fake = Faker()
-                # user_image = property.get('user_image')
-                # user_name = property.get('user_name')
-                # fake_email = fake.ascii_email()
-                # fake_username = fake.name()
-                # avatar = user_image if user_image else None
+                fake = Faker()
+                user_image = property.get('user_image')
+                user_name = property.get('user_name')
+                fake_email = fake.ascii_email()
+                fake_username = fake.name()
+                avatar = user_image if user_image else None
                 
-                # User.objects.get_or_create(
-                #     phone=phone,
-                #     name=user_name,
-                #     defaults={
-                #         'email': fake_email,
-                #         '_avatar': avatar,
-                #         'is_active': True,
-                #         'username': f"{fake_username} - {random.randint(111_111, 999_999)}"
-                #     }
-                # )
+                User.objects.get_or_create(
+                    phone=phone,
+                    name=user_name,
+                    defaults={
+                        'email': fake_email,
+                        '_avatar': avatar,
+                        'is_active': True,
+                        'username': f"{fake_username} - {random.randint(111_111, 999_999)}"
+                    }
+                )
                 
                 
                 
