@@ -365,6 +365,8 @@ def load_properties():
                 # longitude = property.get('longitude')
                 # latitude = property.get('latitude')
                 phones = property.get('phones', [])
+                for phone  in phones:
+                    print(phone)
                 # point = Point(longitude, latitude)
                 # property_instance = models.Property.objects.create(
                 #     user_id=random_user_id,
