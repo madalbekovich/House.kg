@@ -21,6 +21,9 @@ class PropertyFilter(filters.FilterSet, GeoFilterSet):
     floors_last = filters.BooleanFilter(field_name='floors', method='filter_floors_end', label='Последний этаж')
     floors_not_end = filters.BooleanFilter(field_name='floors', method='filter_floors_end', label='Не последний этаж')
     picture_exists = filters.BooleanFilter(field_name='properties_pictures', method='filter_picture_exists', label='Есть фото')
+    installment = filters.BooleanFilter(field_name='installment', method='filter_possiblity', label='Возможна рассрочка')
+    exchange = filters.BooleanFilter(field_name='exchange', method='filter_possiblity', label='Возможен обмен')
+    mortgage = filters.BooleanFilter(field_name='mortgage', method='filter_possiblity', label='Возможна ипотека')
     
     def filter_video_exists(self, queryset, name, value):
         if value:
@@ -35,8 +38,17 @@ class PropertyFilter(filters.FilterSet, GeoFilterSet):
     def filter_floors_end(self, queryset, name, value):
         if value:
             return queryset.exclude(floors=True)
-        return queryset.filter(floors_is_null=True)
+        return queryset.filter(floors=True)
     
+    def filter_possiblity(self, queryset, name, value):
+        if value is None:
+            return queryset
+
+        if value: 
+            return queryset.filter(installment__id=2)
+        else:  
+            return queryset.filter(installment__id=1)
+        
     class Meta:
         model = models.Property
         fields = '__all__'  
