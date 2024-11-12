@@ -24,7 +24,18 @@ class PropertyFilter(filters.FilterSet, GeoFilterSet):
     installment = filters.BooleanFilter(field_name='installment', method='filter_possiblity', label='Возможна рассрочка')
     exchange = filters.BooleanFilter(field_name='exchange', method='filter_possiblity', label='Возможен обмен')
     mortgage = filters.BooleanFilter(field_name='mortgage', method='filter_possiblity', label='Возможна ипотека')
-    
+    order_by = filters.OrderingFilter(
+        fields=(
+            ('created_at', 'created_at'),
+            ('price', 'price'), 
+        ),
+        field_labels={
+            'created_at': 'Дата размещения', 
+            'price': 'По цене'
+        },
+        label='Сортировка'
+    )
+
     def filter_video_exists(self, queryset, name, value):
         if value:
             return queryset.exclude(youtube_url__isnull=True).exclude(youtube_url__exact='')
