@@ -34,8 +34,8 @@ class PropertyFilter(filters.FilterSet, GeoFilterSet):
     
     def filter_floors_end(self, queryset, name, value):
         if value:
-            return queryset.exclude(properties_floors=True)
-        return queryset.filter(properties_floors__null=True)
+            return queryset.exclude(floors=True)
+        return queryset.filter(floors__is_null=True)
     
     class Meta:
         model = models.Property
