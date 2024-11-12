@@ -13,6 +13,8 @@ class PropertyFilter(filters.FilterSet, GeoFilterSet):
     complex_id = filters.NumberFilter(field_name='complex_id_id')
     year_min = filters.NumberFilter(field_name='year_construction', lookup_expr='gte', label='Год постройки от')
     year_max = filters.NumberFilter(field_name='year_construction', lookup_expr='lte', label='Год постройки до')
+    floor = filters.NumberFilter(field_name='floor', lookup_expr='gte', label='Этаж от')
+    floors = filters.NumberFilter(field_name='floors', lookup_expr='lte', label='Этаж до')
     start_date = filters.DateFilter(field_name='created_at', lookup_expr='gte')
     end_date = filters.DateFilter(field_name='created_at', lookup_expr='lte')
     video_exists = filters.BooleanFilter(field_name='youtube_url', method='filter_video_exists', label='Есть видео')

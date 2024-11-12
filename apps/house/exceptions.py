@@ -2,6 +2,7 @@
 # from django.utils import translation
 # from apps.house import data_models
 # translation.activate('en')
+
 # rooms_queryset = data_models.Rooms.objects.all()
 # rooms_serialized = data_serializers.RoomsSerializer(rooms_queryset, many=True).data
 # rooms_data = [{'id': item['id'], 'name': item['name']} for item in rooms_serialized]
