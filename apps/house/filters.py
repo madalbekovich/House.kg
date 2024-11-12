@@ -18,6 +18,7 @@ class PropertyFilter(filters.FilterSet, GeoFilterSet):
     start_date = filters.DateFilter(field_name='created_at', lookup_expr='gte')
     end_date = filters.DateFilter(field_name='created_at', lookup_expr='lte')
     video_exists = filters.BooleanFilter(field_name='youtube_url', method='filter_video_exists', label='Есть видео')
+    floors_end = filters.BooleanFilter(field_name='floors', method='filter_floors_end', label='Не последний этаж')
     picture_exists = filters.BooleanFilter(field_name='properties_pictures', method='filter_picture_exists', label='Есть фото')
     
     def filter_video_exists(self, queryset, name, value):
@@ -29,6 +30,11 @@ class PropertyFilter(filters.FilterSet, GeoFilterSet):
         if value:
             return queryset.exclude(properties_pictures__isnull=True)
         return queryset.filter(properties_pictures__isnull=True)
+    
+    def filter_floors_end(self, queryset, name, value):
+        if value:
+            return queryset.exclude(properties_floors=True)
+        return queryset.filter(properties_floors__null=True)
     
     class Meta:
         model = models.Property
