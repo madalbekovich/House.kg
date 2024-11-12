@@ -176,6 +176,13 @@ class IrrigationSerializer(serializers.ModelSerializer):
     class Meta:
         model = data_models.Irrigation
         fields = ['id', 'name']
+
+        
+class SerieSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = data_models.Serie
+        fields = ['id', 'name']
+   
    
 class LandAmenitiesSerializer(serializers.ModelSerializer):
     class Meta:
@@ -265,6 +272,7 @@ class CombinedSerializer(serializers.Serializer):
     land_options = LandOptionsSerializer(many=True)  
     land_location = LandLocationSerializer(many=True)  
     rental_term = RentalTermSerializer(many=True) 
+    serie = SerieSerializer(many=True)
     land_amenities = LandAmenitiesSerializer(many=True)  
     room_option = RoomOptionSerializer(many=True) 
     water = WaterSerializer(many=True)

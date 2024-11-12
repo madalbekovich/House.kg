@@ -183,6 +183,7 @@ class DataView(APIView):
             'currency': data_models.Currency.objects.all(),
             'possibility': data_models.Possibility.objects.all(),
             'document': data_models.Document.objects.all(),
+            'serie': data_models.Serie.objects.all()
         }
         
         response_data.update(data)

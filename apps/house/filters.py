@@ -18,7 +18,8 @@ class PropertyFilter(filters.FilterSet, GeoFilterSet):
     start_date = filters.DateFilter(field_name='created_at', lookup_expr='gte')
     end_date = filters.DateFilter(field_name='created_at', lookup_expr='lte')
     video_exists = filters.BooleanFilter(field_name='youtube_url', method='filter_video_exists', label='Есть видео')
-    floors_end = filters.BooleanFilter(field_name='floors', method='filter_floors_end', label='Не последний этаж')
+    floors_last = filters.BooleanFilter(field_name='floors', method='filter_floors_end', label='Последний этаж')
+    floors_ = filters.BooleanFilter(field_name='floors', method='filter_floors_end', label='Не последний этаж')
     picture_exists = filters.BooleanFilter(field_name='properties_pictures', method='filter_picture_exists', label='Есть фото')
     
     def filter_video_exists(self, queryset, name, value):
