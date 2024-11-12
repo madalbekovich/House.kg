@@ -162,6 +162,7 @@ class DataView(APIView):
             'water': data_models.Water.objects.all(),
             'electricity': data_models.Electricity.objects.all(),
             'options': data_models.Options.objects.all(),
+            'building_type': data_models.BuildingType.objects.all(),
             'finishing': data_models.Finishing.objects.all(),
             'canalization': data_models.Canalization.objects.all(),
             'comment_allowed': data_models.CommentAllowed.objects.all(),

@@ -86,6 +86,11 @@ class GasSerializer(serializers.ModelSerializer):
     class Meta:
         model = data_models.Gas
         fields = ['id', 'name']
+
+class TypeBuildingSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = data_models.BuildingType
+        fields = ['id', 'name']
     
 class BalconySerializer(serializers.ModelSerializer):
     class Meta:
@@ -107,10 +112,6 @@ class FurnitureSerializer(serializers.ModelSerializer):
         model = data_models.Furniture
         fields = ['id', 'name']
 
-class FurnitureSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = data_models.Furniture
-        fields = ['id', 'name']    
 
 class FlooringSerializer(serializers.ModelSerializer):
     class Meta:
@@ -267,6 +268,7 @@ class CombinedSerializer(serializers.Serializer):
     currency = CurrencySerializer(many=True)
     possibility = PosibilitySerializer(many=True)
     document = DocumentSerializer(many=True)
+    building_type = TypeBuildingSerializer(many=True)
     comment_allowed = CommentAllowedSerializer(many=True)
     irrigation = IrrigationSerializer(many=True)  
     land_options = LandOptionsSerializer(many=True)  
