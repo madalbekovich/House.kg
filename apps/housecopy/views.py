@@ -24,7 +24,7 @@ from apps.helpers import pagination
 from apps.house import mixins
 from apps.house import choices
 from apps.house.tasks import delete_post
-from apps.house import exceptions
+# from apps.house import exceptions
 
 
 class ComplexView(viewsets.GenericViewSet):

@@ -7,10 +7,6 @@
 # rooms_serialized = data_serializers.RoomsSerializer(rooms_queryset, many=True).data
 # rooms_data = [{'id': item['id'], 'name': item['name']} for item in rooms_serialized]
 
-# category = data_models.Category.objects.all()
-# category_serializer = data_serializers.CategorySerializer(category, many=True).data
-# category_data = [{'id': item['id'], 'name': item['name']} for item in category_serializer]
-
 # material_queryset = data_models.Material.objects.all()
 # material_serialized = data_serializers.MaterialSerializer(material_queryset, many=True).data
 # material_data = [{'id': item['id'], 'name': item['name']} for item in material_serialized]
