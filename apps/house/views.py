@@ -166,10 +166,11 @@ class DataView(APIView):
             'finishing': data_models.Finishing.objects.all(),
             'canalization': data_models.Canalization.objects.all(),
             'comment_allowed': data_models.CommentAllowed.objects.all(),
-            'parking_type': data_models.ParkingType.objects.values('id', 'translations__name'),
-            'commercial_type': data_models.CommercialType.objects.values('id', 'translations__name'),
+            'parking_type': data_models.ParkingType.objects.all(),
+            'commercial_type': data_models.CommercialType.objects.all(),
+            'room_location': data_models.RoomLocation.objects.all(),
             'phone_info': data_models.Phone.objects.all(),
-            'internet': data_models.Internet.objects.all(),
+            'internet': data_models.Internet.objects.all(), 
             'toilet': data_models.Toilet.objects.all(),
             'gas': data_models.Gas.objects.all(),
             'balcony': data_models.Balcony.objects.all(),
@@ -211,13 +212,13 @@ class PropertyParam(APIView):
         rules = exceptions.get_validation_rules(region_id, town_id).get(type_id, {}).get(category)
         print(f"Validation rules: {rules}")
         if not rules:
-            return {"error": "Параметры не указаны type_id & category", "developer_message": "Введите идентификатор типа и категорий", "client_message": "Введите тип категорий и тип размещения"}
+            return {"error": "Параметры не указаны type_id & category", "developer_message": "Введите идентификатор типа и категорий", "client_message": "Пожайлуста, заполните все обезятельые поля!"}
 
         missing_fields = []
         invalid_fields = []
 
         for rule in rules:
-            field_name = rule['name']
+            field_name = rule['label']
             required = rule.get('required', False)
             value = request.query_params.get(field_name)
 
@@ -226,10 +227,12 @@ class PropertyParam(APIView):
 
         available_fields = [
             {
-                "name": rule['name'],
+                "label": rule['label'],
                 "type": rule['type'],
+                "title": rule['title'],
+                "placeholder": rule['placeholder'],
                 "required": rule['required'],
-                "data": rule.get('data', []),
+                "input": rule['input'],
             }
             for rule in rules
         ]
