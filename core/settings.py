@@ -158,7 +158,7 @@ REST_FRAMEWORK = {
 }
 
 SPECTACULAR_SETTINGS = {
-    'TITLE': 'wef.kg',
+    'TITLE': 'Busines.kg',
     'DESCRIPTION': 'DESCRIPTION....',
     'VERSION': '1.0.0',
     'COMPONENT_SPLIT_REQUEST': True,
